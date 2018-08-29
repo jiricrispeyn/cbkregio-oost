@@ -1,16 +1,16 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 class ListItem extends PureComponent {
   state = {};
   render() {
-    const { title, divider } = this.props;
+    const { title, divider, onPress } = this.props;
     return (
       <View>
         {divider && <View style={styles.divider} />}
-        <View style={styles.listItem}>
+        <TouchableOpacity style={styles.listItem} onPress={onPress}>
           <Text style={styles.title}>{title}</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     );
   }
