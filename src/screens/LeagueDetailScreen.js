@@ -1,13 +1,14 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
   View,
   ActivityIndicator
-} from "react-native";
-import ListItem from "../components/list/ListItem";
-import { database } from "../services/firebase";
+} from 'react-native';
+import ListItem from '../components/list/ListItem';
+import Tabs from '../components/tabs/Tabs';
+import { database } from '../services/firebase';
 
 class LeagueDetailScreen extends PureComponent {
   state = {
@@ -19,8 +20,7 @@ class LeagueDetailScreen extends PureComponent {
     console.log(this.props);
     const clubs = await database
       .ref(`/clubs/${this.props.navigation.state.params.league}`)
-      .once("value");
-    console.log(clubs.val());
+      .once('value');
     this.setState({ clubs: clubs.val(), isLoading: false });
   }
 
@@ -28,7 +28,7 @@ class LeagueDetailScreen extends PureComponent {
     if (this.state.isLoading) {
       return (
         <SafeAreaView>
-          <View style={[styles.screen, { justifyContent: "center" }]}>
+          <View style={[styles.screen, { justifyContent: 'center' }]}>
             <ActivityIndicator />
           </View>
         </SafeAreaView>
@@ -40,7 +40,20 @@ class LeagueDetailScreen extends PureComponent {
     return (
       <SafeAreaView>
         <View style={styles.screen}>
-          <ScrollView style={styles.scrollView}>
+          <Tabs
+            tabs={[
+              'Klassement',
+              'Vorige speeldag',
+              'Kalender',
+              'Spelerslijst',
+              'ELO Ranking',
+              'Adressen'
+            ]}
+          />
+          <ScrollView
+            style={styles.scrollView}
+            showsVerticalScrollIndicator={false}
+          >
             {clubs &&
               clubs.map((club, i) => (
                 <ListItem
@@ -58,18 +71,7 @@ class LeagueDetailScreen extends PureComponent {
 
 const styles = StyleSheet.create({
   screen: {
-    height: "100%"
-  },
-  header: {
-    justifyContent: "center",
-    alignItems: "center",
-    height: 64,
-    backgroundColor: "#6563A4"
-  },
-  title: {
-    color: "#fff",
-    fontSize: 17,
-    fontWeight: "400"
+    height: '100%'
   }
 });
 
