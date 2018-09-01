@@ -24,45 +24,43 @@ class LeagueDetailScreen extends PureComponent {
     this.setState({ clubs: clubs.val(), isLoading: false });
   }
 
-  render() {
-    if (this.state.isLoading) {
-      return (
-        <SafeAreaView>
-          <View style={[styles.screen, { justifyContent: 'center' }]}>
-            <ActivityIndicator />
-          </View>
-        </SafeAreaView>
-      );
-    }
+  renderTabs() {
+    return (
+      <Tabs
+        tabs={[
+          'Klassement',
+          'Vorige speeldag',
+          'Kalender',
+          'Spelerslijst',
+          'ELO Ranking',
+          'Adressen'
+        ]}
+      />
+    );
+  }
 
-    const { clubs } = this.state;
+  renderLoading() {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
+
+  renderClubs(clubs) {
+    return clubs.map((club, i) => (
+      <ListItem key={i} title={club.name} divider={i === 0 ? false : true} />
+    ));
+  }
+
+  render() {
+    const { isLoading, clubs } = this.state;
 
     return (
       <SafeAreaView>
         <View style={styles.screen}>
-          <Tabs
-            tabs={[
-              'Klassement',
-              'Vorige speeldag',
-              'Kalender',
-              'Spelerslijst',
-              'ELO Ranking',
-              'Adressen'
-            ]}
-          />
-          <ScrollView
-            style={styles.scrollView}
-            showsVerticalScrollIndicator={false}
-          >
-            {clubs &&
-              clubs.map((club, i) => (
-                <ListItem
-                  key={i}
-                  title={club.name}
-                  divider={i === 0 ? false : true}
-                />
-              ))}
-          </ScrollView>
+          {this.renderTabs()}
+          {isLoading ? this.renderLoading() : clubs && this.renderClubs(clubs)}
         </View>
       </SafeAreaView>
     );
