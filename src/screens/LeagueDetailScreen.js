@@ -71,7 +71,8 @@ class LeagueDetailScreen extends PureComponent {
 
 const styles = StyleSheet.create({
   screen: {
-    height: '100%'
+    height: '100%',
+    backgroundColor: '#fff'
   }
 });
 
