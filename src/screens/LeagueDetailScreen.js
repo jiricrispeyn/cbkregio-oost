@@ -60,7 +60,9 @@ class LeagueDetailScreen extends PureComponent {
       <SafeAreaView>
         <View style={styles.screen}>
           {this.renderTabs()}
-          {isLoading ? this.renderLoading() : clubs && this.renderClubs(clubs)}
+          {isLoading
+            ? this.renderLoading()
+            : clubs && <ScrollView>{this.renderClubs(clubs)}</ScrollView>}
         </View>
       </SafeAreaView>
     );
