@@ -4,7 +4,9 @@ import {
   SafeAreaView,
   ScrollView,
   View,
-  ActivityIndicator
+  ActivityIndicator,
+  Clipboard,
+  Alert
 } from 'react-native';
 import ListItem from '../components/list/ListItem';
 import Tabs from '../components/tabs/Tabs';
@@ -22,6 +24,12 @@ class LeagueDetailScreen extends PureComponent {
       .ref(`/clubs/${this.props.navigation.state.params.league}`)
       .once('value');
     this.setState({ clubs: clubs.val(), isLoading: false });
+    console.log(clubs.val());
+  }
+
+  copy(club) {
+    Clipboard.setString(club.address);
+    Alert.alert(`Adres ${club.name} gekopieerd`);
   }
 
   renderTabs() {
@@ -49,7 +57,14 @@ class LeagueDetailScreen extends PureComponent {
 
   renderClubs(clubs) {
     return clubs.map((club, i) => (
-      <ListItem key={i} title={club.name} divider={i === 0 ? false : true} />
+      <ListItem
+        key={i}
+        title={club.name}
+        rightTitle={club.place}
+        subtitle={club.address}
+        divider={i === 0 ? false : true}
+        onPress={() => this.copy(club)}
+      />
     ));
   }
 
