@@ -33,18 +33,16 @@ class LeagueDetailScreen extends PureComponent {
   }
 
   renderTabs() {
-    return (
-      <Tabs
-        tabs={[
-          'Klassement',
-          'Vorige speeldag',
-          'Kalender',
-          'Spelerslijst',
-          'ELO Ranking',
-          'Adressen'
-        ]}
-      />
-    );
+    const tabs = [
+      'Adressen',
+      'Klassement',
+      'Vorige speeldag',
+      'Kalender',
+      'Spelerslijst',
+      'ELO Ranking'
+    ];
+
+    return <Tabs tabs={tabs} />;
   }
 
   renderLoading() {
