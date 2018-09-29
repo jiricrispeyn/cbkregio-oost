@@ -9,7 +9,7 @@ import LeagueDetailScreen from '../screens/LeagueDetailScreen';
 
 const headerStyle = {
   height: 64,
-  backgroundColor: '#6563A4',
+  backgroundColor: '#172E4C',
   shadowColor: 'transparent'
 };
 const headerTitleStyle = {
@@ -55,7 +55,10 @@ const LeaguesStackNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'Leagues'
+    initialRouteName: 'Leagues',
+    cardStyle: {
+      backgroundColor: '#172E4C'
+    }
   }
 );
 
