@@ -10,31 +10,16 @@ import {
 class Tabs extends PureComponent {
   state = {};
 
-  getTabIconColor(i) {
-    switch (i) {
-      case 0:
-        return '#50D2C2';
-      case 1:
-        return '#D667CD';
-      case 2:
-        return '#FFC000';
-      case 3:
-        return '#00B9FF';
-      default:
-        return '#fff';
-    }
-  }
-
   renderTab(tab, i) {
     return (
       <TouchableOpacity key={i} style={styles.tab}>
-        <View
-          style={[styles.tabIcon, { borderColor: this.getTabIconColor(i) }]}
-        />
+        {i > 0 && <View style={styles.tabDivider} />}
         <Text style={styles.tabText}>{tab}</Text>
       </TouchableOpacity>
     );
   }
+
+  renderDivider() {}
 
   render() {
     const { tabs } = this.props;
@@ -45,9 +30,7 @@ class Tabs extends PureComponent {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
         >
-          <View width={5} />
           {tabs.map((tab, i) => this.renderTab(tab, i))}
-          <View width={15} />
         </ScrollView>
       </View>
     );
@@ -59,30 +42,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 60,
-    backgroundColor: '#6563A4'
+    backgroundColor: '#FAFAFC',
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5
   },
   scrollView: {},
   tab: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 15,
-    paddingTop: 9,
-    paddingBottom: 11,
-    marginLeft: 10,
-    borderColor: 'rgba(255, 255, 255, .2)',
-    borderWidth: 1,
-    borderRadius: 18
-  },
-  tabIcon: {
-    width: 11,
-    height: 11,
-    marginRight: 5,
-    borderWidth: 2,
-    borderRadius: 6
+    justifyContent: 'center',
+    width: 115
   },
   tabText: {
-    color: '#fff',
-    fontSize: 13
+    color: '#0E1D31',
+    fontSize: 12,
+    fontWeight: '500',
+    letterSpacing: 0.14
+  },
+  tabDivider: {
+    alignSelf: 'flex-start',
+    width: 1,
+    height: 10,
+    backgroundColor: '#E0E4EA'
   }
 });
 
