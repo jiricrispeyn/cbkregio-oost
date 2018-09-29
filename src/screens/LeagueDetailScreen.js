@@ -54,16 +54,21 @@ class LeagueDetailScreen extends PureComponent {
   }
 
   renderClubs(clubs) {
-    return clubs.map((club, i) => (
-      <ListItem
-        key={i}
-        title={club.name}
-        rightTitle={club.place}
-        subtitle={club.address}
-        divider={i === 0 ? false : true}
-        onPress={() => this.copy(club)}
-      />
-    ));
+    return (
+      <View style={styles.listWrapper}>
+        {clubs.map((club, i) => (
+          <ListItem
+            key={i}
+            title={club.name}
+            rightTitle={club.place}
+            subtitle={club.address}
+            divider={i === 0 ? false : true}
+            isLast={i === clubs.length - 1}
+            onPress={() => this.copy(club)}
+          />
+        ))}
+      </View>
+    );
   }
 
   render() {
@@ -75,7 +80,11 @@ class LeagueDetailScreen extends PureComponent {
           {this.renderTabs()}
           {isLoading
             ? this.renderLoading()
-            : clubs && <ScrollView>{this.renderClubs(clubs)}</ScrollView>}
+            : clubs && (
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  {this.renderClubs(clubs)}
+                </ScrollView>
+              )}
         </View>
       </SafeAreaView>
     );
@@ -85,7 +94,10 @@ class LeagueDetailScreen extends PureComponent {
 const styles = StyleSheet.create({
   screen: {
     height: '100%',
-    backgroundColor: '#fff'
+    paddingHorizontal: 15
+  },
+  listWrapper: {
+    paddingBottom: 15
   }
 });
 

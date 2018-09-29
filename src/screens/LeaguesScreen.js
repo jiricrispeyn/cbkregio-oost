@@ -38,16 +38,20 @@ class LeaguesScreen extends PureComponent {
             style={styles.scrollView}
             showsVerticalScrollIndicator={false}
           >
-            {this.state.leagues.map((league, i) => (
-              <ListItem
-                key={i}
-                title={league}
-                divider={i === 0 ? false : true}
-                onPress={() =>
-                  this.props.navigation.navigate('LeagueDetail', { league })
-                }
-              />
-            ))}
+            <View style={styles.listWrapper}>
+              {this.state.leagues.map((league, i) => (
+                <ListItem
+                  key={i}
+                  title={league}
+                  divider={i === 0 ? false : true}
+                  isFirst={i === 0}
+                  isLast={i === this.state.leagues.length - 1}
+                  onPress={() =>
+                    this.props.navigation.navigate('LeagueDetail', { league })
+                  }
+                />
+              ))}
+            </View>
           </ScrollView>
         </View>
       </SafeAreaView>
@@ -58,7 +62,10 @@ class LeaguesScreen extends PureComponent {
 const styles = StyleSheet.create({
   screen: {
     height: '100%',
-    backgroundColor: '#fff'
+    paddingHorizontal: 15
+  },
+  listWrapper: {
+    paddingVertical: 15
   }
 });
 
