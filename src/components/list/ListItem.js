@@ -4,11 +4,26 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 class ListItem extends PureComponent {
   state = {};
   render() {
-    const { title, rightTitle, subtitle, divider, onPress } = this.props;
+    const {
+      title,
+      rightTitle,
+      subtitle,
+      divider,
+      isFirst,
+      isLast,
+      onPress
+    } = this.props;
     return (
       <View>
         {divider && <View style={styles.divider} />}
-        <TouchableOpacity style={styles.listItem} onPress={onPress}>
+        <TouchableOpacity
+          style={[
+            styles.listItem,
+            isFirst && styles.firstListItem,
+            isLast && styles.lastListItem
+          ]}
+          onPress={onPress}
+        >
           <View style={styles.titleWrapper}>
             <Text style={styles.title}>{title}</Text>
             {rightTitle && <Text style={styles.rightTitle}>{rightTitle}</Text>}
@@ -22,7 +37,16 @@ class ListItem extends PureComponent {
 
 const styles = StyleSheet.create({
   listItem: {
+    backgroundColor: '#fff',
     padding: 30
+  },
+  firstListItem: {
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5
+  },
+  lastListItem: {
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5
   },
   titleWrapper: {
     flexDirection: 'row',
@@ -31,7 +55,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    color: '#1D1D26'
+    color: '#1D1D26',
+    letterSpacing: 0.19
   },
   rightTitle: {
     fontSize: 13,
@@ -44,7 +69,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: 'rgba(29, 29, 38, .1)'
+    backgroundColor: '#D9E0E9'
   }
 });
 
