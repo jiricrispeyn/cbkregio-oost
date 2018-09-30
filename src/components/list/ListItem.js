@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 class ListItem extends PureComponent {
   state = {};
@@ -7,6 +8,7 @@ class ListItem extends PureComponent {
     const {
       title,
       rightTitle,
+      rightIcon,
       subtitle,
       divider,
       isFirst,
@@ -27,6 +29,13 @@ class ListItem extends PureComponent {
           <View style={styles.titleWrapper}>
             <Text style={styles.title}>{title}</Text>
             {rightTitle && <Text style={styles.rightTitle}>{rightTitle}</Text>}
+            {rightIcon && (
+              <MaterialIcons
+                name={rightIcon}
+                size={32}
+                style={styles.rightIcon}
+              />
+            )}
           </View>
           {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
         </TouchableOpacity>
