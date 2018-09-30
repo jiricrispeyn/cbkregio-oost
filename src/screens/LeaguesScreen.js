@@ -43,6 +43,7 @@ class LeaguesScreen extends PureComponent {
                 <ListItem
                   key={i}
                   title={league}
+                  rightIcon="keyboard-arrow-right"
                   divider={i === 0 ? false : true}
                   isFirst={i === 0}
                   isLast={i === this.state.leagues.length - 1}
