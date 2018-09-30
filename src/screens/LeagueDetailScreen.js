@@ -13,8 +13,14 @@ import Tabs from '../components/tabs/Tabs';
 import { database } from '../services/firebase';
 
 class LeagueDetailScreen extends PureComponent {
+  constructor() {
+    super();
+    this.updateIndex = this.updateIndex.bind(this);
+  }
+
   state = {
     clubs: [],
+    selectedIndex: 0,
     isLoading: true
   };
 
@@ -32,6 +38,10 @@ class LeagueDetailScreen extends PureComponent {
     Alert.alert(`Adres ${club.name} gekopieerd`);
   }
 
+  updateIndex(selectedIndex) {
+    this.setState({ selectedIndex });
+  }
+
   renderTabs() {
     const tabs = [
       'Adressen',
@@ -41,8 +51,16 @@ class LeagueDetailScreen extends PureComponent {
       'Spelerslijst',
       'ELO Ranking'
     ];
+    const { selectedIndex } = this.state;
 
-    return <Tabs tabs={tabs} />;
+    return (
+      <Tabs
+        tabs={tabs}
+        selectedIndex={selectedIndex}
+        onPress={this.updateIndex}
+        style={{ marginTop: 15 }}
+      />
+    );
   }
 
   renderLoading() {
@@ -77,14 +95,16 @@ class LeagueDetailScreen extends PureComponent {
     return (
       <SafeAreaView>
         <View style={styles.screen}>
-          {this.renderTabs()}
-          {isLoading
-            ? this.renderLoading()
-            : clubs && (
-                <ScrollView showsVerticalScrollIndicator={false}>
-                  {this.renderClubs(clubs)}
-                </ScrollView>
-              )}
+          <View style={styles.scrollViewWrapper}>
+            {this.renderTabs()}
+            {isLoading
+              ? this.renderLoading()
+              : clubs && (
+                  <ScrollView showsVerticalScrollIndicator={false}>
+                    {this.renderClubs(clubs)}
+                  </ScrollView>
+                )}
+          </View>
         </View>
       </SafeAreaView>
     );
@@ -95,6 +115,9 @@ const styles = StyleSheet.create({
   screen: {
     height: '100%',
     paddingHorizontal: 15
+  },
+  scrollViewWrapper: {
+    height: '100%'
   },
   listWrapper: {
     paddingBottom: 15
