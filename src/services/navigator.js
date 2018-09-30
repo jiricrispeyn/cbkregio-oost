@@ -10,7 +10,7 @@ import LeagueDetailScreen from '../screens/LeagueDetailScreen';
 const headerStyle = {
   height: 64,
   backgroundColor: '#172E4C',
-  shadowColor: 'transparent'
+  borderBottomWidth: 0
 };
 const headerTitleStyle = {
   color: '#fff',
