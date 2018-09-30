@@ -11,10 +11,17 @@ class Tabs extends PureComponent {
   state = {};
 
   renderTab(tab, i) {
+    const { selectedIndex, onPress } = this.props;
+    const isSelected = selectedIndex === i;
     return (
-      <TouchableOpacity key={i} style={styles.tab}>
+      <TouchableOpacity key={i} style={styles.tab} onPress={() => onPress(i)}>
         {i > 0 && <View style={styles.tabDivider} />}
-        <Text style={styles.tabText}>{tab}</Text>
+        <View style={styles.tabTextWrapper}>
+          <Text style={[styles.tabText, isSelected && styles.selectedTabText]}>
+            {tab}
+          </Text>
+        </View>
+        {isSelected && <View style={styles.selectedTabBorder} />}
       </TouchableOpacity>
     );
   }
@@ -22,9 +29,9 @@ class Tabs extends PureComponent {
   renderDivider() {}
 
   render() {
-    const { tabs } = this.props;
+    const { tabs, style } = this.props;
     return (
-      <View style={styles.tabs}>
+      <View style={[styles.tabs, style]}>
         <ScrollView
           style={styles.scrollView}
           horizontal={true}
@@ -40,30 +47,45 @@ class Tabs extends PureComponent {
 const styles = StyleSheet.create({
   tabs: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'stretch',
     height: 60,
     backgroundColor: '#FAFAFC',
     borderTopLeftRadius: 5,
-    borderTopRightRadius: 5
+    borderTopRightRadius: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#D9E0E9'
   },
   scrollView: {},
   tab: {
+    position: 'relative',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
     width: 115
   },
   tabText: {
-    color: '#0E1D31',
+    color: '#8F96A0',
     fontSize: 12,
     fontWeight: '500',
     letterSpacing: 0.14
   },
+  selectedTabText: {
+    color: '#0E1D31'
+  },
+  tabTextWrapper: {
+    flex: 1,
+    alignItems: 'center'
+  },
   tabDivider: {
-    alignSelf: 'flex-start',
     width: 1,
     height: 10,
     backgroundColor: '#E0E4EA'
+  },
+  selectedTabBorder: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    height: 2,
+    backgroundColor: '#25ABFB'
   }
 });
 
