@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, YellowBox } from 'react-native';
-import createBottomTabNavigator from './src/services/navigator';
+import createStackNavigator from './src/services/navigator';
 
 YellowBox.ignoreWarnings(['Remote debugger']);
-const AppNavigator = createBottomTabNavigator;
+const AppNavigator = createStackNavigator;
 
 export default class App extends React.Component {
   render() {

@@ -37,7 +37,7 @@ class SettingsScreen extends React.Component {
   }
 }
 
-const LeaguesStackNavigator = createStackNavigator(
+export default createStackNavigator(
   {
     Leagues: {
       screen: LeaguesScreen,
@@ -58,36 +58,6 @@ const LeaguesStackNavigator = createStackNavigator(
     initialRouteName: 'Leagues',
     cardStyle: {
       backgroundColor: '#172E4C'
-    }
-  }
-);
-
-export default createBottomTabNavigator(
-  {
-    Leagues: {
-      screen: LeaguesStackNavigator,
-      navigationOptions: {
-        title: 'Reeksen'
-      }
-    },
-    Settings: {
-      screen: SettingsScreen,
-      navigationOptions: { title: 'Instellingen' }
-    }
-  },
-  {
-    tabBarOptions: {
-      activeTintColor: '#FC3768',
-      inactiveTintColor: 'rgba(29, 29, 38, .3)',
-      style: {
-        height: 60,
-        backgroundColor: '#fff',
-        borderTopColor: 'rgba(0, 0, 0, 0.1)',
-        borderTopWidth: 1
-      },
-      labelStyle: {
-        fontSize: 15
-      }
     }
   }
 );
