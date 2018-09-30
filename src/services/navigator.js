@@ -14,10 +14,12 @@ const headerStyle = {
 };
 const headerTitleStyle = {
   color: '#fff',
-  fontSize: 17
+  fontSize: 34,
+  fontWeight: '600'
 };
 const headerBackTitleStyle = {
-  color: '#fff'
+  color: '#fff',
+  fontSize: 15
 };
 const headerTintColor = '#fff';
 const styles = {
