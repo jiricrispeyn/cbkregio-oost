@@ -68,13 +68,16 @@ const styles = StyleSheet.create({
     letterSpacing: 0.19
   },
   rightTitle: {
-    fontSize: 13,
-    color: 'rgba(29, 29, 38, .5)'
+    fontSize: 12,
+    color: '#8F96A0'
+  },
+  rightIcon: {
+    color: '#CED4DB'
   },
   subtitle: {
     marginTop: 5,
-    fontSize: 13,
-    color: 'rgba(29, 29, 38, .5)'
+    fontSize: 12,
+    color: '#8F96A0'
   },
   divider: {
     height: 1,
