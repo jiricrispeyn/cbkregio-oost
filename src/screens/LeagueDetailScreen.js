@@ -25,12 +25,10 @@ class LeagueDetailScreen extends PureComponent {
   };
 
   async componentDidMount() {
-    console.log(this.props);
     const clubs = await database
       .ref(`/clubs/${this.props.navigation.state.params.league}`)
       .once('value');
     this.setState({ clubs: clubs.val(), isLoading: false });
-    console.log(clubs.val());
   }
 
   copy(club) {
