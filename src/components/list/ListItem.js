@@ -11,21 +11,12 @@ class ListItem extends PureComponent {
       rightIcon,
       subtitle,
       divider,
-      isFirst,
-      isLast,
       onPress
     } = this.props;
     return (
       <View>
         {divider && <View style={styles.divider} />}
-        <TouchableOpacity
-          style={[
-            styles.listItem,
-            isFirst && styles.firstListItem,
-            isLast && styles.lastListItem
-          ]}
-          onPress={onPress}
-        >
+        <TouchableOpacity style={styles.listItem} onPress={onPress}>
           <View style={styles.titleWrapper}>
             <Text style={styles.title}>{title}</Text>
             {rightTitle && <Text style={styles.rightTitle}>{rightTitle}</Text>}
@@ -46,16 +37,7 @@ class ListItem extends PureComponent {
 
 const styles = StyleSheet.create({
   listItem: {
-    backgroundColor: '#fff',
     padding: 30
-  },
-  firstListItem: {
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5
-  },
-  lastListItem: {
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5
   },
   titleWrapper: {
     flexDirection: 'row',
