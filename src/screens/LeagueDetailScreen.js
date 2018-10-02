@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
   StyleSheet,
-  SafeAreaView,
   ScrollView,
   View,
   ActivityIndicator,
@@ -79,7 +78,6 @@ class LeagueDetailScreen extends PureComponent {
             rightTitle={club.place}
             subtitle={club.address}
             divider={i === 0 ? false : true}
-            isLast={i === clubs.length - 1}
             onPress={() => this.copy(club)}
           />
         ))}
@@ -91,20 +89,21 @@ class LeagueDetailScreen extends PureComponent {
     const { isLoading, clubs } = this.state;
 
     return (
-      <SafeAreaView>
-        <View style={styles.screen}>
-          <View style={styles.scrollViewWrapper}>
-            {this.renderTabs()}
-            {isLoading
-              ? this.renderLoading()
-              : clubs && (
-                  <ScrollView showsVerticalScrollIndicator={false}>
-                    {this.renderClubs(clubs)}
-                  </ScrollView>
-                )}
-          </View>
+      <View style={styles.screen}>
+        <View style={styles.scrollViewWrapper}>
+          {this.renderTabs()}
+          {isLoading
+            ? this.renderLoading()
+            : clubs && (
+                <ScrollView
+                  showsVerticalScrollIndicator={false}
+                  style={styles.scrollView}
+                >
+                  {this.renderClubs(clubs)}
+                </ScrollView>
+              )}
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 }
@@ -116,6 +115,12 @@ const styles = StyleSheet.create({
   },
   scrollViewWrapper: {
     height: '100%'
+  },
+  scrollView: {
+    backgroundColor: '#fff',
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    marginBottom: 15
   },
   listWrapper: {
     paddingBottom: 15
