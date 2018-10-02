@@ -11,7 +11,7 @@ class ListItem extends PureComponent {
       rightIcon,
       subtitle,
       divider,
-      onPress
+      onPress,
     } = this.props;
     return (
       <View>
@@ -37,34 +37,34 @@ class ListItem extends PureComponent {
 
 const styles = StyleSheet.create({
   listItem: {
-    padding: 30
+    padding: 30,
   },
   titleWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: 16,
     color: '#1D1D26',
-    letterSpacing: 0.19
+    letterSpacing: 0.19,
   },
   rightTitle: {
     fontSize: 12,
-    color: '#8F96A0'
+    color: '#8F96A0',
   },
   rightIcon: {
-    color: '#CED4DB'
+    color: '#CED4DB',
   },
   subtitle: {
     marginTop: 5,
     fontSize: 12,
-    color: '#8F96A0'
+    color: '#8F96A0',
   },
   divider: {
     height: 1,
-    backgroundColor: '#D9E0E9'
-  }
+    backgroundColor: '#D9E0E9',
+  },
 });
 
 export default ListItem;

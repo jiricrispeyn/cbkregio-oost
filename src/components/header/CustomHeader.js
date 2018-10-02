@@ -71,24 +71,24 @@ const styles = StyleSheet.create({
     paddingTop: 36,
     paddingBottom: 12,
     paddingLeft: 14,
-    paddingRight: 16
+    paddingRight: 16,
   },
   largeTitle: {
     color: '#fff',
     fontSize: 34,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   parentTitleWrapper: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   parentTitle: {
     color: '#fff',
-    fontSize: 15
+    fontSize: 15,
   },
   backIcon: {
-    color: '#fff'
-  }
+    color: '#fff',
+  },
 });
 
 export default CustomHeader;

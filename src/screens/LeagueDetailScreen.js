@@ -5,7 +5,7 @@ import {
   View,
   ActivityIndicator,
   Clipboard,
-  Alert
+  Alert,
 } from 'react-native';
 import ListItem from '../components/list/ListItem';
 import Tabs from '../components/tabs/Tabs';
@@ -20,7 +20,7 @@ class LeagueDetailScreen extends PureComponent {
   state = {
     clubs: [],
     selectedIndex: 0,
-    isLoading: true
+    isLoading: true,
   };
 
   async componentDidMount() {
@@ -46,7 +46,7 @@ class LeagueDetailScreen extends PureComponent {
       'Vorige speeldag',
       'Kalender',
       'Spelerslijst',
-      'ELO Ranking'
+      'ELO Ranking',
     ];
     const { selectedIndex } = this.state;
 
@@ -111,20 +111,20 @@ class LeagueDetailScreen extends PureComponent {
 const styles = StyleSheet.create({
   screen: {
     height: '100%',
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
   },
   scrollViewWrapper: {
-    height: '100%'
+    height: '100%',
   },
   scrollView: {
     backgroundColor: '#fff',
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
-    marginBottom: 15
+    marginBottom: 15,
   },
   listWrapper: {
-    paddingBottom: 15
-  }
+    paddingBottom: 15,
+  },
 });
 
 export default LeagueDetailScreen;

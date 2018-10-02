@@ -6,7 +6,7 @@ import { database } from '../services/firebase';
 class LeaguesScreen extends PureComponent {
   state = {
     leagues: [],
-    isLoading: true
+    isLoading: true,
   };
 
   async componentDidMount() {
@@ -51,7 +51,7 @@ class LeaguesScreen extends PureComponent {
 const styles = StyleSheet.create({
   screen: {
     height: '100%',
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
   },
   scrollView: {
     backgroundColor: '#fff',
@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 5,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
-    marginVertical: 15
-  }
+    marginVertical: 15,
+  },
 });
 
 export default LeaguesScreen;

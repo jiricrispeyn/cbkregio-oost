@@ -4,7 +4,7 @@ import {
   View,
   ScrollView,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 
 class Tabs extends PureComponent {
@@ -53,40 +53,40 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     borderBottomWidth: 1,
-    borderBottomColor: '#D9E0E9'
+    borderBottomColor: '#D9E0E9',
   },
   scrollView: {},
   tab: {
     position: 'relative',
     flexDirection: 'row',
     alignItems: 'center',
-    width: 115
+    width: 115,
   },
   tabText: {
     color: '#8F96A0',
     fontSize: 12,
     fontWeight: '500',
-    letterSpacing: 0.14
+    letterSpacing: 0.14,
   },
   selectedTabText: {
-    color: '#0E1D31'
+    color: '#0E1D31',
   },
   tabTextWrapper: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   tabDivider: {
     width: 1,
     height: 10,
-    backgroundColor: '#E0E4EA'
+    backgroundColor: '#E0E4EA',
   },
   selectedTabBorder: {
     position: 'absolute',
     bottom: 0,
     width: '100%',
     height: 2,
-    backgroundColor: '#25ABFB'
-  }
+    backgroundColor: '#25ABFB',
+  },
 });
 
 export default Tabs;

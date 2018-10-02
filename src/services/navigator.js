@@ -11,21 +11,21 @@ export default createStackNavigator(
       screen: LeaguesScreen,
       navigationOptions: {
         title: 'Reeksen',
-        header: props => <CustomHeader {...props} />
-      }
+        header: props => <CustomHeader {...props} />,
+      },
     },
     LeagueDetail: {
       screen: LeagueDetailScreen,
       navigationOptions: ({ navigation }) => ({
         title: navigation.state.params.league,
-        header: props => <CustomHeader {...props} />
-      })
-    }
+        header: props => <CustomHeader {...props} />,
+      }),
+    },
   },
   {
     initialRouteName: 'Leagues',
     cardStyle: {
-      backgroundColor: '#172E4C'
-    }
+      backgroundColor: '#172E4C',
+    },
   }
 );
