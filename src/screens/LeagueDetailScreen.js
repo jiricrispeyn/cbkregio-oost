@@ -10,6 +10,7 @@ import {
 import ListItem from '../components/list/ListItem';
 import Tabs from '../components/tabs/Tabs';
 import { database } from '../services/firebase';
+import { API_URL } from '../config/api';
 
 class LeagueDetailScreen extends PureComponent {
   constructor() {
@@ -23,16 +24,21 @@ class LeagueDetailScreen extends PureComponent {
     isLoading: true,
   };
 
+  getAddresses(league) {
+    return fetch(`${API_URL}/leagues/${league}/addresses`)
+      .then(res => res.json())
+      .catch(err => console.log(err));
+  }
+
   async componentDidMount() {
-    const clubs = await database
-      .ref(`/clubs/${this.props.navigation.state.params.league}`)
-      .once('value');
-    this.setState({ clubs: clubs.val(), isLoading: false });
+    const { league } = this.props.navigation.state.params;
+    const { addresses } = await this.getAddresses(league);
+    this.setState({ clubs: addresses, isLoading: false });
   }
 
   copy(club) {
     Clipboard.setString(club.address);
-    Alert.alert(`Adres ${club.name} gekopieerd`);
+    Alert.alert(`Adres ${club.club} gekopieerd`);
   }
 
   updateIndex(selectedIndex) {
@@ -74,7 +80,7 @@ class LeagueDetailScreen extends PureComponent {
         {clubs.map((club, i) => (
           <ListItem
             key={i}
-            title={club.name}
+            title={club.club}
             rightTitle={club.place}
             subtitle={club.address}
             divider={i === 0 ? false : true}
@@ -86,7 +92,7 @@ class LeagueDetailScreen extends PureComponent {
   }
 
   render() {
-    const { isLoading, clubs } = this.state;
+    const { isLoading, clubs, selectedIndex } = this.state;
 
     return (
       <View style={styles.screen}>
@@ -99,7 +105,7 @@ class LeagueDetailScreen extends PureComponent {
                   showsVerticalScrollIndicator={false}
                   style={styles.scrollView}
                 >
-                  {this.renderClubs(clubs)}
+                  {selectedIndex === 0 && this.renderClubs(clubs)}
                 </ScrollView>
               )}
         </View>

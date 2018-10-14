@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, ScrollView, View, ActivityIndicator } from 'react-native';
 import ListItem from '../components/list/ListItem';
 import { database } from '../services/firebase';
+import { API_URL } from '../config/api';
 
 class LeaguesScreen extends PureComponent {
   state = {
@@ -9,9 +10,15 @@ class LeaguesScreen extends PureComponent {
     isLoading: true,
   };
 
+  getLeagues() {
+    return fetch(`${API_URL}/leagues`)
+      .then(res => res.json())
+      .catch(err => console.log(err));
+  }
+
   async componentDidMount() {
-    const leagues = await database.ref('/leagues').once('value');
-    this.setState({ leagues: leagues.val(), isLoading: false });
+    const { leagues } = await this.getLeagues();
+    this.setState({ leagues, isLoading: false });
   }
 
   render() {
@@ -33,11 +40,13 @@ class LeaguesScreen extends PureComponent {
             {this.state.leagues.map((league, i) => (
               <ListItem
                 key={i}
-                title={league}
+                title={league.id}
                 rightIcon="keyboard-arrow-right"
                 divider={i === 0 ? false : true}
                 onPress={() =>
-                  this.props.navigation.navigate('LeagueDetail', { league })
+                  this.props.navigation.navigate('LeagueDetail', {
+                    league: league.id,
+                  })
                 }
               />
             ))}
