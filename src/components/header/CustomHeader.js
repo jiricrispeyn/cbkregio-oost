@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
 
 class CustomHeader extends PureComponent {
   state = {};
@@ -40,11 +40,7 @@ class CustomHeader extends PureComponent {
 
     return (
       <TouchableOpacity style={styles.parentTitleWrapper} onPress={goBack}>
-        <MaterialIcons
-          name="keyboard-arrow-left"
-          size={32}
-          style={styles.backIcon}
-        />
+        <EvilIcons name="chevron-left" size={32} style={styles.backIcon} />
         <Text style={styles.parentTitle}>{title}</Text>
       </TouchableOpacity>
     );
@@ -76,17 +72,21 @@ const styles = StyleSheet.create({
   largeTitle: {
     color: '#fff',
     fontSize: 34,
+    lineHeight: 41,
     fontWeight: '600',
   },
   parentTitleWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 9,
+    marginLeft: -8,
   },
   parentTitle: {
     color: '#fff',
     fontSize: 15,
   },
   backIcon: {
+    top: 1,
     color: '#fff',
   },
 });
