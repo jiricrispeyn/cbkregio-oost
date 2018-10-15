@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import CustomHeader from '../components/header/CustomHeader';
 import LeaguesScreen from '../screens/LeaguesScreen';
 import LeagueDetailScreen from '../screens/LeagueDetailScreen';
+import TablesScreen from '../screens/TablesScreen';
 
 export default createStackNavigator(
   {
@@ -21,9 +21,16 @@ export default createStackNavigator(
         header: props => <CustomHeader {...props} />,
       }),
     },
+    Tables: {
+      screen: TablesScreen,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Klassement',
+        header: props => <CustomHeader {...props} />,
+      }),
+    },
   },
   {
-    initialRouteName: 'Leagues',
+    initialRouteName: 'Tables',
     cardStyle: {
       backgroundColor: '#172E4C',
     },
