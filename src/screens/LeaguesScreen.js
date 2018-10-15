@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, ScrollView, View, ActivityIndicator } from 'react-native';
 import ListItem from '../components/list/ListItem';
-import { database } from '../services/firebase';
 import { API_URL } from '../config/api';
 
 class LeaguesScreen extends PureComponent {
@@ -30,19 +29,24 @@ class LeaguesScreen extends PureComponent {
       );
     }
 
+    const { leagues } = this.state;
+
     return (
       <View style={styles.screen}>
         <ScrollView
           style={styles.scrollView}
+          contentContainerStyle={styles.contentContainerStyle}
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.listWrapper}>
-            {this.state.leagues.map((league, i) => (
+            {leagues.map((league, i) => (
               <ListItem
                 key={i}
                 title={league.id}
-                rightIcon="keyboard-arrow-right"
-                divider={i === 0 ? false : true}
+                rightIcon="chevron-right"
+                divider={i !== 0}
+                isFirst={i === 0}
+                isLast={i === leagues.length - 1}
                 onPress={() =>
                   this.props.navigation.navigate('LeagueDetail', {
                     league: league.id,
@@ -63,12 +67,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   scrollView: {
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
-    marginVertical: 15,
+    marginTop: 15,
+  },
+  contentContainerStyle: {
+    paddingBottom: 15,
   },
 });
 
