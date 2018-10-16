@@ -8,6 +8,7 @@ class TablesScreen extends PureComponent {
     isLoading: true,
     tableHead: ['#', 'Club', 'W', 'D', 'L', 'Setpt', 'Pt'],
     tableData: [],
+    widthArr: [60, 180, 60, 60, 60, 90, 60],
   };
 
   getLeagueDetail(id) {
@@ -33,7 +34,7 @@ class TablesScreen extends PureComponent {
   }
 
   render() {
-    const { tableHead, tableData } = this.state;
+    const { tableHead, tableData, widthArr } = this.state;
     return (
       <View style={styles.screen}>
         <ScrollView
@@ -41,10 +42,23 @@ class TablesScreen extends PureComponent {
           contentContainerStyle={styles.contentContainerStyle}
           showsVerticalScrollIndicator={false}
         >
-          <Table>
-            <Row data={tableHead} textStyle={styles.text} />
-            <Rows data={tableData} textStyle={styles.text} />
-          </Table>
+          <ScrollView horizontal={true}>
+            <Table style={styles.table}>
+              <Row
+                data={tableHead}
+                widthArr={widthArr}
+                style={styles.tableHeadStyle}
+                borderStyle={styles.tableHeadBorder}
+                textStyle={styles.tableHeadText}
+              />
+              <Rows
+                data={tableData}
+                widthArr={widthArr}
+                style={styles.tableDataStyle}
+                textStyle={styles.tableDataText}
+              />
+            </Table>
+          </ScrollView>
         </ScrollView>
       </View>
     );
@@ -56,14 +70,34 @@ const styles = StyleSheet.create({
     height: '100%',
     paddingHorizontal: 15,
   },
+  table: {
+    backgroundColor: '#fff',
+    borderRadius: 5,
+  },
+  tableHeadBorder: {
+    borderRightWidth: 0,
+  },
+  tableHeadStyle: {
+    height: 40,
+  },
+  tableHeadText: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: '#8F96A0',
+    paddingHorizontal: 16,
+  },
   scrollView: {
     marginTop: 15,
   },
   contentContainerStyle: {
     paddingBottom: 15,
   },
-  text: {
-    color: '#fff',
+  tableDataStyle: {
+    height: 52,
+  },
+  tableDataText: {
+    paddingHorizontal: 16,
+    fontSize: 12,
   },
 });
 
