@@ -1,17 +1,13 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, ScrollView, View, Text } from 'react-native';
-import {
-  Table,
-  TableRow,
-  TableCell,
-  TableHeader,
-} from '../components/table/Table';
+import { Table, Row, Rows } from 'react-native-table-component';
 import { API_URL } from '../config/api';
 
 class TablesScreen extends PureComponent {
   state = {
-    tables: [],
     isLoading: true,
+    tableHead: ['#', 'Club', 'W', 'D', 'L', 'Setpt', 'Pt'],
+    tableData: [],
   };
 
   getLeagueDetail(id) {
@@ -20,15 +16,24 @@ class TablesScreen extends PureComponent {
       .catch(err => console.log(err));
   }
 
+  getTableData(tables) {
+    return tables.map(row => {
+      const { position, club, won, drawn, lost, setpoints, points } = row;
+
+      return [position, club, won, drawn, lost, setpoints, points];
+    });
+  }
+
   async componentDidMount() {
     const { navigation } = this.props;
     const league = navigation.getParam('league', '2C');
     const { tables } = await this.getLeagueDetail(league);
-    this.setState({ tables, isLoading: false });
+    const tableData = this.getTableData(tables);
+    this.setState({ tableData, isLoading: false });
   }
 
   render() {
-    const { tables } = this.state;
+    const { tableHead, tableData } = this.state;
     return (
       <View style={styles.screen}>
         <ScrollView
@@ -36,27 +41,9 @@ class TablesScreen extends PureComponent {
           contentContainerStyle={styles.contentContainerStyle}
           showsVerticalScrollIndicator={false}
         >
-          <Table style={styles.table}>
-            <TableRow>
-              <TableHeader text="#" />
-              <TableHeader text="Club" />
-              <TableHeader text="W" />
-              <TableHeader text="D" />
-              <TableHeader text="L" />
-              <TableHeader text="Setpt" />
-              <TableHeader text="Pt" />
-            </TableRow>
-            {tables.map((row, i) => (
-              <TableRow key={i}>
-                <TableCell text={row.position} />
-                <TableCell text={row.club} />
-                <TableCell text={row.won} />
-                <TableCell text={row.drawn} />
-                <TableCell text={row.lost} />
-                <TableCell text={row.setpoints} />
-                <TableCell text={row.points} />
-              </TableRow>
-            ))}
+          <Table>
+            <Row data={tableHead} textStyle={styles.text} />
+            <Rows data={tableData} textStyle={styles.text} />
           </Table>
         </ScrollView>
       </View>
@@ -74,6 +61,9 @@ const styles = StyleSheet.create({
   },
   contentContainerStyle: {
     paddingBottom: 15,
+  },
+  text: {
+    color: '#fff',
   },
 });
 
