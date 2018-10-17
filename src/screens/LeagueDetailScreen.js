@@ -7,11 +7,22 @@ class LeagueDetailScreen extends PureComponent {
     const { navigation } = this.props;
     const league = navigation.getParam('league', null);
     const items = [
-      'Klassement',
-      'Uitslagen',
-      'Elo Ranking',
-      'Spelerslijst',
-      'Adressen',
+      {
+        title: 'Klassement',
+        screen: 'Tables',
+      },
+      {
+        title: 'Uitslagen',
+        screen: 'Results',
+      },
+      {
+        title: 'Spelers',
+        screen: 'Tables',
+      },
+      {
+        title: 'Adressen',
+        screen: 'Tables',
+      },
     ];
 
     return (
@@ -25,12 +36,12 @@ class LeagueDetailScreen extends PureComponent {
             {items.map((item, i) => (
               <ListItem
                 key={i}
-                title={item}
+                title={item.title}
                 rightIcon="chevron-right"
                 isFirst={i === 0}
                 isLast={i === items.length - 1}
                 divider={i === 0 ? false : true}
-                onPress={() => navigation.navigate('Tables', { league })}
+                onPress={() => navigation.navigate(item.screen, { league })}
               />
             ))}
           </View>
