@@ -4,6 +4,7 @@ import CustomHeader from '../components/header/CustomHeader';
 import LeaguesScreen from '../screens/LeaguesScreen';
 import LeagueDetailScreen from '../screens/LeagueDetailScreen';
 import TablesScreen from '../screens/TablesScreen';
+import ResultsScreen from '../screens/ResultsScreen';
 
 export default createStackNavigator(
   {
@@ -28,9 +29,16 @@ export default createStackNavigator(
         header: props => <CustomHeader {...props} />,
       }),
     },
+    Results: {
+      screen: ResultsScreen,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Resultaten',
+        header: props => <CustomHeader {...props} />,
+      }),
+    },
   },
   {
-    initialRouteName: 'Tables',
+    initialRouteName: 'Leagues',
     cardStyle: {
       backgroundColor: '#172E4C',
     },
