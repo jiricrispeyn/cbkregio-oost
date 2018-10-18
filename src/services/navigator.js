@@ -38,9 +38,15 @@ export default createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Leagues',
+    // initialRouteName: 'Leagues',
+    initialRouteName: 'Results',
     cardStyle: {
-      backgroundColor: '#172E4C',
+      backgroundColor: 'transparent',
     },
+    transitionConfig: () => ({
+      containerStyle: {
+        backgroundColor: 'transparent',
+      },
+    }),
   }
 );
