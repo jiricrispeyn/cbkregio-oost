@@ -3,7 +3,11 @@ import { StyleSheet, ScrollView, View, Text } from 'react-native';
 import closestIndexTo from 'date-fns/closest_index_to';
 import isBefore from 'date-fns/is_before';
 import differenceInDays from 'date-fns/difference_in_days';
+import format from 'date-fns/format';
+import locale from 'date-fns/locale/nl';
 import { API_URL } from '../config/api';
+import TrendingMatch from '../components/matches/TrendingMatch';
+import Datepicker from '../components/datepicker/Datepicker';
 
 class TablesScreen extends PureComponent {
   state = {
@@ -32,7 +36,7 @@ class TablesScreen extends PureComponent {
 
   async componentDidMount() {
     const { navigation } = this.props;
-    const league = navigation.getParam('league', null);
+    const league = navigation.getParam('league', '2C');
     let { results } = await this.getLeagueDetail(league);
 
     results = results.map(result => {
@@ -43,7 +47,6 @@ class TablesScreen extends PureComponent {
     });
 
     const trendingMatches = this.getTrendingMatches(results);
-    console.log(trendingMatches);
 
     this.setState({
       results,
@@ -52,24 +55,55 @@ class TablesScreen extends PureComponent {
     });
   }
 
+  renderTrendingMatches(trendingMatches) {
+    const date = format(trendingMatches._date, 'D MMMM YYYY', { locale });
+    return (
+      <View>
+        <View style={styles.trendingHeader}>
+          <Text style={styles.trendingTitle}>Laatste speeldag</Text>
+          <Text style={styles.trendingDate}>{date}</Text>
+        </View>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          style={styles.scrollView}
+          contentContainerStyle={styles.contentContainerStyle}
+        >
+          {trendingMatches.matches.map(match => (
+            <TrendingMatch match={match} cardStyle={styles.trendingCardStyle} />
+          ))}
+        </ScrollView>
+      </View>
+    );
+  }
+
   render() {
     const { results, trendingMatches } = this.state;
+    const { dates, disabledDates } = results.reduce(
+      (acc, result) => {
+        const dates = [...acc.dates, result._date];
+        const disabledDates = !result.matches
+          ? [...acc.disabledDates, result._date]
+          : acc.disabledDates;
+
+        return { dates, disabledDates };
+      },
+      {
+        dates: [],
+        disabledDates: [],
+      }
+    );
+
     return (
       <View style={styles.screen}>
-        {trendingMatches && (
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {trendingMatches.matches.map(match => (
-              <View>
-                <Text>
-                  {match.home.club} {match.home.score}
-                </Text>
-                <Text>
-                  {match.away.club} {match.away.score}
-                </Text>
-              </View>
-            ))}
-          </ScrollView>
+        {dates && (
+          <Datepicker
+            dates={dates}
+            disabled={disabledDates}
+            style={styles.datepicker}
+          />
         )}
+        {trendingMatches && this.renderTrendingMatches(trendingMatches)}
       </View>
     );
   }
@@ -79,35 +113,35 @@ const styles = StyleSheet.create({
   screen: {
     height: '100%',
   },
-  table: {
-    backgroundColor: '#fff',
-    borderRadius: 5,
+  datepicker: {
+    // flexGrow: 0,
+    marginTop: 30,
+  },
+  trendingHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginHorizontal: 15,
+    marginTop: 31,
   },
-  tableHeadBorder: {
-    borderRightWidth: 0,
+  trendingTitle: {
+    fontSize: 14,
+    color: '#fff',
+    letterSpacing: 0.24,
   },
-  tableHeadStyle: {
-    height: 40,
-  },
-  tableHeadText: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: '#8F96A0',
-    paddingHorizontal: 16,
+  trendingDate: {
+    fontSize: 10,
+    color: '#3D618F',
   },
   scrollView: {
-    marginTop: 15,
+    paddingTop: 14,
+    paddingBottom: 31,
   },
   contentContainerStyle: {
-    paddingBottom: 15,
+    paddingLeft: 15,
   },
-  tableDataStyle: {
-    height: 52,
-  },
-  tableDataText: {
-    paddingHorizontal: 16,
-    fontSize: 12,
+  trendingCardStyle: {
+    marginRight: 15,
   },
 });
 
