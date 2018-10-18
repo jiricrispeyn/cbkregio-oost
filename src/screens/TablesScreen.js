@@ -27,7 +27,7 @@ class TablesScreen extends PureComponent {
 
   async componentDidMount() {
     const { navigation } = this.props;
-    const league = navigation.getParam('league', '2C');
+    const league = navigation.getParam('league', null);
     const { tables } = await this.getLeagueDetail(league);
     const tableData = this.getTableData(tables);
     this.setState({ tableData, isLoading: false });
@@ -42,8 +42,11 @@ class TablesScreen extends PureComponent {
           contentContainerStyle={styles.contentContainerStyle}
           showsVerticalScrollIndicator={false}
         >
-          <ScrollView horizontal={true}>
-            <Table style={styles.table}>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            <Table
+              style={styles.table}
+              borderStyle={{ borderColor: 'transparent' }}
+            >
               <Row
                 data={tableHead}
                 widthArr={widthArr}
@@ -68,11 +71,11 @@ class TablesScreen extends PureComponent {
 const styles = StyleSheet.create({
   screen: {
     height: '100%',
-    paddingHorizontal: 15,
   },
   table: {
     backgroundColor: '#fff',
     borderRadius: 5,
+    marginHorizontal: 15,
   },
   tableHeadBorder: {
     borderRightWidth: 0,
