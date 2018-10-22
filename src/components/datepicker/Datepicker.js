@@ -6,29 +6,56 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import { LinearGradient } from 'expo';
 import format from 'date-fns/format';
 import locale from 'date-fns/locale/nl';
 
 class Datepicker extends PureComponent {
   state = {};
 
-  renderDateCircle(date, i) {
-    const isDisabled = this.props.disabled.includes(date);
+  renderDate(date, i) {
+    const { onPress, selected, disabled } = this.props;
+    const isDisabled = disabled.includes(date);
     const day = format(date, 'D', { locale });
     const month = format(date, 'MMM', { locale });
+    const containerStyle = [styles.dateContainer, i === 0 && styles.firstDate];
+
+    if (date === selected) {
+      return (
+        <View style={containerStyle} key={i}>
+          {this.renderSelected(day, month)}
+        </View>
+      );
+    }
+
     return (
-      <View style={styles.dateContainer} key={i}>
+      <View style={containerStyle} key={i}>
         <TouchableOpacity
           style={[
-            styles.dateLink,
-            isDisabled && styles.dateLinkDisabled,
-            i === 0 && styles.dateLinkFirst,
+            styles.circle,
+            styles.circleBorder,
+            isDisabled && styles.disabledTouchable,
           ]}
+          onPress={() => !isDisabled && onPress(date)}
         >
-          <Text style={styles.dateTextDay}>{day}</Text>
-          <Text style={styles.dateTextMonth}>{month}</Text>
+          <Text style={styles.dayText}>{day}</Text>
+          <Text style={styles.monthText}>{month}</Text>
         </TouchableOpacity>
       </View>
+    );
+  }
+
+  renderSelected(day, month) {
+    return (
+      <LinearGradient
+        colors={['#00B6FF', '#007FFF']}
+        start={[1, 1]}
+        end={[0, 0]}
+        style={styles.circle}
+      >
+        <Text style={[styles.dayText, styles.selectedText]}>{day}</Text>
+        <Text style={[styles.monthText, styles.selectedText]}>{month}</Text>
+      </LinearGradient>
     );
   }
 
@@ -41,7 +68,7 @@ class Datepicker extends PureComponent {
         style={[styles.scrollView, style]}
         contentContainerStyle={styles.contentContainerStyle}
       >
-        {dates.map((date, i) => this.renderDateCircle(date, i))}
+        {dates.map((date, i) => this.renderDate(date, i))}
       </ScrollView>
     );
   }
@@ -51,30 +78,37 @@ const styles = StyleSheet.create({
   contentContainerStyle: {
     paddingHorizontal: 20,
   },
-  dateLink: {
+  dateContainer: {
+    marginLeft: 20,
+  },
+  circle: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 20,
     width: 50,
     height: 50,
     borderRadius: 25,
+  },
+  circleBorder: {
     borderWidth: 1,
     borderColor: '#26446B',
   },
-  dateLinkDisabled: {
+  disabledTouchable: {
     opacity: 0.2,
   },
-  dateLinkFirst: {
+  firstDate: {
     marginLeft: 0,
   },
-  dateTextDay: {
+  dayText: {
     fontSize: 14,
     fontWeight: '500',
     color: '#3D618F',
   },
-  dateTextMonth: {
+  monthText: {
     fontSize: 10,
     color: '#3D618F',
+  },
+  selectedText: {
+    color: '#fff',
   },
 });
 
