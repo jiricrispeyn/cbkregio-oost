@@ -14,6 +14,7 @@ class TablesScreen extends PureComponent {
     isLoading: true,
     results: [],
     trendingMatches: null,
+    selectedDate: null,
   };
 
   getLeagueDetail(id) {
@@ -34,6 +35,29 @@ class TablesScreen extends PureComponent {
     return shouldShowPrev ? results[closestIndex - 1] : results[closestIndex];
   }
 
+  getDefaultSelected(results) {
+    const { _date } = results.find(result => result.matches);
+
+    return _date;
+  }
+
+  getDates(results) {
+    return results.reduce(
+      (acc, result) => {
+        const dates = [...acc.dates, result._date];
+        const disabledDates = !result.matches
+          ? [...acc.disabledDates, result._date]
+          : acc.disabledDates;
+
+        return { dates, disabledDates };
+      },
+      {
+        dates: [],
+        disabledDates: [],
+      }
+    );
+  }
+
   async componentDidMount() {
     const { navigation } = this.props;
     const league = navigation.getParam('league', '2C');
@@ -47,10 +71,12 @@ class TablesScreen extends PureComponent {
     });
 
     const trendingMatches = this.getTrendingMatches(results);
+    const selectedDate = this.getDefaultSelected(results);
 
     this.setState({
       results,
       trendingMatches,
+      selectedDate,
       isLoading: false,
     });
   }
@@ -77,30 +103,23 @@ class TablesScreen extends PureComponent {
     );
   }
 
-  render() {
-    const { results, trendingMatches } = this.state;
-    const { dates, disabledDates } = results.reduce(
-      (acc, result) => {
-        const dates = [...acc.dates, result._date];
-        const disabledDates = !result.matches
-          ? [...acc.disabledDates, result._date]
-          : acc.disabledDates;
+  onPress(selectedDate) {
+    this.setState({ selectedDate });
+  }
 
-        return { dates, disabledDates };
-      },
-      {
-        dates: [],
-        disabledDates: [],
-      }
-    );
+  render() {
+    const { results, trendingMatches, selectedDate } = this.state;
+    const { dates, disabledDates } = this.getDates(results);
 
     return (
       <View style={styles.screen}>
         {dates && (
           <Datepicker
             dates={dates}
+            selected={selectedDate}
             disabled={disabledDates}
             style={styles.datepicker}
+            onPress={this.onPress.bind(this)}
           />
         )}
         {trendingMatches && this.renderTrendingMatches(trendingMatches)}
@@ -114,7 +133,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   datepicker: {
-    // flexGrow: 0,
     marginTop: 30,
   },
   trendingHeader: {
