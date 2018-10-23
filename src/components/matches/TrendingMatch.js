@@ -1,26 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { LinearGradient } from 'expo';
-
-function getClubTextStyle(team, winner) {
-  if (team !== winner) {
-    return;
-  }
-
-  return { fontWeight: '500' };
-}
-
-function getScoreTextStyle(team, winner) {
-  if (!winner) {
-    return;
-  }
-
-  if (team === winner) {
-    return { color: '#0CC634' };
-  }
-
-  return { color: '#C60C0C' };
-}
+import { getClubTextStyle, getScoreTextStyle } from '../../utils/match';
 
 const TrendingMatch = props => {
   const { match, cardStyle } = props;
