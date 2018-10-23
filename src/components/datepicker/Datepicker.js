@@ -61,6 +61,11 @@ class Datepicker extends PureComponent {
 
   render() {
     const { dates, style } = this.props;
+
+    if (!dates) {
+      return;
+    }
+
     return (
       <ScrollView
         horizontal={true}
@@ -75,6 +80,7 @@ class Datepicker extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+  scrollView: {},
   contentContainerStyle: {
     paddingHorizontal: 20,
   },
@@ -90,10 +96,10 @@ const styles = StyleSheet.create({
   },
   circleBorder: {
     borderWidth: 1,
-    borderColor: '#26446B',
+    borderColor: '#3a68a3',
   },
   disabledTouchable: {
-    opacity: 0.2,
+    opacity: 0.3,
   },
   firstDate: {
     marginLeft: 0,
@@ -101,11 +107,11 @@ const styles = StyleSheet.create({
   dayText: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#3D618F',
+    color: '#5e87ba',
   },
   monthText: {
     fontSize: 10,
-    color: '#3D618F',
+    color: '#5e87ba',
   },
   selectedText: {
     color: '#fff',
