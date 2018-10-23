@@ -38,8 +38,7 @@ export default createStackNavigator(
     },
   },
   {
-    // initialRouteName: 'Leagues',
-    initialRouteName: 'Results',
+    initialRouteName: 'Leagues',
     cardStyle: {
       backgroundColor: 'transparent',
     },
