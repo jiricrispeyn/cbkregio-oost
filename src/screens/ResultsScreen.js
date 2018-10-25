@@ -161,7 +161,7 @@ class TablesScreen extends PureComponent {
     this.setState({ refreshing: true });
 
     const { navigation } = this.props;
-    const league = navigation.getParam('league', '2C');
+    const league = navigation.getParam('league', null);
     let { results } = await this.getLeagueDetail(league);
 
     results = results.map(result => {
