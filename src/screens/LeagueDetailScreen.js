@@ -17,7 +17,7 @@ class LeagueDetailScreen extends PureComponent {
       },
       {
         title: 'Spelers',
-        screen: 'Tables',
+        screen: 'Players',
       },
       {
         title: 'Adressen',
