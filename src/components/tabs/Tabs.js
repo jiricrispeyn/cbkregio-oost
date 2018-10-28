@@ -6,15 +6,34 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 class Tabs extends PureComponent {
   state = {};
 
+  static propTypes = {
+    tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
+    selectedIndex: PropTypes.number,
+    onPress: PropTypes.func,
+    scroll: PropTypes.bool,
+    style: PropTypes.object,
+    tabStyle: PropTypes.object,
+  };
+
+  static defaultProps = {
+    selectedIndex: 0,
+    scroll: false,
+  };
+
   renderTab(tab, i) {
-    const { selectedIndex, onPress } = this.props;
+    const { selectedIndex, onPress, tabStyle, scroll } = this.props;
     const isSelected = selectedIndex === i;
     return (
-      <TouchableOpacity key={i} style={styles.tab} onPress={() => onPress(i)}>
+      <TouchableOpacity
+        key={i}
+        style={[styles.tab, scroll ? { width: 155 } : { flex: 1 }, tabStyle]}
+        onPress={() => onPress(i)}
+      >
         {i > 0 && <View style={styles.tabDivider} />}
         <View style={styles.tabTextWrapper}>
           <Text style={[styles.tabText, isSelected && styles.selectedTabText]}>
@@ -26,19 +45,26 @@ class Tabs extends PureComponent {
     );
   }
 
-  renderDivider() {}
+  renderTabs(tabs) {
+    return tabs.map((tab, i) => this.renderTab(tab, i));
+  }
 
   render() {
-    const { tabs, style } = this.props;
+    const { tabs, style, scroll } = this.props;
+
     return (
       <View style={[styles.tabs, style]}>
-        <ScrollView
-          style={styles.scrollView}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        >
-          {tabs.map((tab, i) => this.renderTab(tab, i))}
-        </ScrollView>
+        {scroll ? (
+          <ScrollView
+            style={styles.scrollView}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          >
+            {this.renderTabs(tabs)}
+          </ScrollView>
+        ) : (
+          this.renderTabs(tabs)
+        )}
       </View>
     );
   }
@@ -60,7 +86,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     flexDirection: 'row',
     alignItems: 'center',
-    width: 115,
   },
   tabText: {
     color: '#8F96A0',
