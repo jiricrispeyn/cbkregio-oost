@@ -9,7 +9,7 @@ class LeaguesScreen extends PureComponent {
     isLoading: true,
   };
 
-  getLeagues() {
+  async getLeagues() {
     return fetch(`${API_URL}/leagues`)
       .then(res => res.json())
       .catch(err => console.log(err));

@@ -28,7 +28,7 @@ class TablesScreen extends PureComponent {
     selectedDate: null,
   };
 
-  getLeagueDetail(id) {
+  async getLeagueDetail(id) {
     return fetch(`${API_URL}/leagues/${id}`)
       .then(res => res.json())
       .catch(err => console.log(err));
