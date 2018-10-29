@@ -18,15 +18,23 @@ class Tabs extends PureComponent {
     scroll: PropTypes.bool,
     style: PropTypes.object,
     tabStyle: PropTypes.object,
+    highlightColor: PropTypes.string,
   };
 
   static defaultProps = {
     selectedIndex: 0,
     scroll: false,
+    highlightColor: '#25ABFB',
   };
 
   renderTab(tab, i) {
-    const { selectedIndex, onPress, tabStyle, scroll } = this.props;
+    const {
+      selectedIndex,
+      onPress,
+      tabStyle,
+      scroll,
+      highlightColor,
+    } = this.props;
     const isSelected = selectedIndex === i;
     return (
       <TouchableOpacity
@@ -40,7 +48,14 @@ class Tabs extends PureComponent {
             {tab}
           </Text>
         </View>
-        {isSelected && <View style={styles.selectedTabBorder} />}
+        {isSelected && (
+          <View
+            style={[
+              styles.selectedTabBorder,
+              { backgroundColor: highlightColor },
+            ]}
+          />
+        )}
       </TouchableOpacity>
     );
   }
@@ -110,7 +125,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: '100%',
     height: 2,
-    backgroundColor: '#25ABFB',
   },
 });
 
