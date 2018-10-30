@@ -27,6 +27,12 @@ export default class PlayersScreen extends PureComponent {
     });
   }
 
+  onPressClub(selectedClub) {
+    this.setState({
+      selectedClub,
+    });
+  }
+
   async getPlayers(id) {
     return fetch(`${API_URL}/leagues/${id}/players`)
       .then(res => res.json())
@@ -74,30 +80,6 @@ export default class PlayersScreen extends PureComponent {
     }));
   };
 
-  renderPlayers() {
-    const { players } = this.state;
-
-    const playersByClub = players.reduce((acc, curr) => {
-      const { club } = curr;
-      const players = acc[club] || [];
-
-      return {
-        ...acc,
-        [club]: [...players, curr],
-      };
-    }, {});
-
-    return (
-      <React.Fragment>
-        <Tabs
-          tabs={Object.keys(playersByClub)}
-          selectedIndex={0}
-          scroll={true}
-        />
-      </React.Fragment>
-    );
-  }
-
   renderItem({ rank, name, club, rating, percentage, sets }) {
     const { eloView } = this.state;
 
@@ -136,6 +118,7 @@ export default class PlayersScreen extends PureComponent {
   render() {
     const {
       selectedIndex,
+      selectedClub,
       players,
       playersByClub,
       eloRanking,
@@ -154,9 +137,9 @@ export default class PlayersScreen extends PureComponent {
           <React.Fragment>
             <Tabs
               tabs={Object.keys(playersByClub)}
-              selectedIndex={0}
+              selectedIndex={selectedClub}
               scroll={true}
-              onPress={() => {}}
+              onPress={this.onPressClub.bind(this)}
               highlightColor="#B9C2CE"
               style={{
                 backgroundColor: '#fff',
