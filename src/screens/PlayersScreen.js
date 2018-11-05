@@ -28,9 +28,13 @@ export default class PlayersScreen extends PureComponent {
   }
 
   onPressClub(selectedClub) {
-    this.setState({
+    this.setState(prevState => ({
       selectedClub,
-    });
+      selectedPlayers: this.getSelectedPlayers(
+        prevState.playersByClub,
+        selectedClub
+      ),
+    }));
   }
 
   async getPlayers(id) {
@@ -62,12 +66,22 @@ export default class PlayersScreen extends PureComponent {
         [club]: [...players, curr],
       };
     }, {});
+    const selectedPlayers = this.getSelectedPlayers(
+      playersByClub,
+      this.state.selectedClub
+    );
 
     this.setState({
-      players,
       eloRanking,
       playersByClub,
+      selectedPlayers,
     });
+  }
+
+  getSelectedPlayers(players, selectedClub) {
+    const club = Object.keys(players)[selectedClub];
+
+    return players[club];
   }
 
   keyExtractor = ({ id }) => id;
@@ -119,8 +133,8 @@ export default class PlayersScreen extends PureComponent {
     const {
       selectedIndex,
       selectedClub,
-      players,
       playersByClub,
+      selectedPlayers,
       eloRanking,
       eloView,
     } = this.state;
@@ -151,7 +165,7 @@ export default class PlayersScreen extends PureComponent {
               showsVerticalScrollIndicator={false}
               style={styles.scrollView}
               contentContainerStyle={styles.contentContainerStyle}
-              data={players}
+              data={selectedPlayers}
               renderItem={({ item }) => (
                 <View>
                   <Text>
