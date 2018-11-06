@@ -17,6 +17,7 @@ import { API_URL } from '../config/api';
 import TrendingMatch from '../components/matches/TrendingMatch';
 import Match from '../components/matches/Match';
 import Datepicker from '../components/datepicker/Datepicker';
+import colors from '../utils/colors';
 
 class TablesScreen extends PureComponent {
   state = {
@@ -255,12 +256,12 @@ const styles = StyleSheet.create({
   },
   trendingTitle: {
     fontSize: 14,
-    color: '#fff',
+    color: colors.white,
     letterSpacing: 0.24,
   },
   trendingDate: {
     fontSize: 10,
-    color: '#3D618F',
+    color: colors.chambray,
   },
   trendingScrollView: {
     paddingTop: 14,
@@ -276,7 +277,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
   resultsTitle: {
-    color: '#fff',
+    color: colors.white,
     fontSize: 14,
     letterSpacing: 0.24,
   },

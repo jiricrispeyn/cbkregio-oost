@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import colors from '../../utils/colors';
 
 class ListItem extends PureComponent {
   state = {};
@@ -49,7 +50,7 @@ class ListItem extends PureComponent {
 const styles = StyleSheet.create({
   listItem: {
     padding: 30,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
   },
   titleWrapper: {
     flexDirection: 'row',
@@ -58,20 +59,20 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    color: '#0E1D31',
+    color: colors.firefly,
     letterSpacing: 0.19,
   },
   rightTitle: {
     fontSize: 12,
-    color: '#8F96A0',
+    color: colors.manatee,
   },
   rightIcon: {
-    color: '#CED4DB',
+    color: colors.mischka,
   },
   subtitle: {
     marginTop: 5,
     fontSize: 12,
-    color: '#8F96A0',
+    color: colors.manatee,
   },
   isFirst: {
     borderTopLeftRadius: 5,
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: '#D9E0E9',
+    backgroundColor: colors.mystic,
   },
 });
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import colors from '../../utils/colors';
 
 function getCellStyle(head, pos, suffix) {
   switch (head[pos]) {
@@ -44,7 +45,7 @@ const Table = ({ head, data, style }) => {
                 style={[
                   styles.cellWrapper,
                   getCellStyle(head, j, 'Wrapper'),
-                  i < 2 && { backgroundColor: '#fafafc' },
+                  i < 2 && { backgroundColor: colors.whisper },
                 ]}
               >
                 <Text
@@ -64,7 +65,7 @@ const Table = ({ head, data, style }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     borderRadius: 5,
   },
   row: {
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
   positionCellWrapper: {
     width: 30,
     borderRightWidth: 1,
-    borderColor: '#D9E0E9',
+    borderColor: colors.mystic,
   },
   clubCellWrapper: {
     flex: 1,
@@ -93,23 +94,23 @@ const styles = StyleSheet.create({
     width: 35,
   },
   cell: {
-    color: '#0E1D31',
+    color: colors.firefly,
     fontSize: 12,
   },
   positionCell: {
     fontWeight: '500',
-    color: '#0E1D31',
+    color: colors.firefly,
   },
   clubCell: {},
   matchesCell: {
     fontWeight: '500',
-    color: '#8F96A0',
+    color: colors.manatee,
   },
   pointsCell: {
     width: 35,
     fontWeight: '500',
     letterSpacing: 0.14,
-    color: '#0E1D31',
+    color: colors.firefly,
     backgroundColor: 'green',
   },
   headerRow: {
@@ -118,10 +119,10 @@ const styles = StyleSheet.create({
   dataRow: {
     height: 52,
     borderTopWidth: 1,
-    borderColor: '#D9E0E9',
+    borderColor: colors.mystic,
   },
   headerText: {
-    color: '#8F96A0',
+    color: colors.manatee,
     fontWeight: '500',
   },
   dataText: {},

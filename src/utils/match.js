@@ -1,3 +1,5 @@
+import colors from '../utils/colors';
+
 export function getClubTextStyle(team, winner) {
   if (team !== winner) {
     return;
@@ -12,8 +14,8 @@ export function getScoreTextStyle(team, winner) {
   }
 
   if (team === winner) {
-    return { color: '#0CC634' };
+    return { color: colors.malachite };
   }
 
-  return { color: '#C60C0C' };
+  return { color: colors.milanoRed };
 }

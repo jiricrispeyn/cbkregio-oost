@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { getClubTextStyle, getScoreTextStyle } from '../../utils/match';
+import colors from '../../utils/colors';
 
 const Match = props => {
   const { match, position, isFirst, isLast } = props;
@@ -53,9 +54,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     borderTopWidth: 1,
-    borderColor: '#D9E0E9',
+    borderColor: colors.mystic,
     overflow: 'hidden',
   },
   isFirst: {
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 5,
   },
   background: {
-    backgroundColor: '#FAFAFC',
+    backgroundColor: colors.whisper,
   },
   left: {
     flex: 1,
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
   right: {
     width: 85,
     borderLeftWidth: 1,
-    borderColor: '#D9E0E9',
+    borderColor: colors.mystic,
   },
   scoreContainer: {
     flex: 1,
@@ -85,12 +86,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   club: {
-    color: '#0E1D31',
+    color: colors.firefly,
     fontSize: 12,
     letterSpacing: 0.14,
   },
   score: {
-    color: '#0E1D31',
+    color: colors.firefly,
     fontSize: 14,
     fontWeight: '500',
     letterSpacing: 0.24,

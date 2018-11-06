@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
+import colors from '../../utils/colors';
 
 class CustomHeader extends PureComponent {
   state = {};
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   largeTitle: {
-    color: '#fff',
+    color: colors.white,
     fontSize: 34,
     lineHeight: 41,
     fontWeight: '600',
@@ -82,12 +83,12 @@ const styles = StyleSheet.create({
     marginLeft: -8,
   },
   parentTitle: {
-    color: '#fff',
+    color: colors.white,
     fontSize: 15,
   },
   backIcon: {
     top: 1,
-    color: '#fff',
+    color: colors.white,
   },
 });
 

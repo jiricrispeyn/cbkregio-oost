@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { LinearGradient } from 'expo';
 import { getClubTextStyle, getScoreTextStyle } from '../../utils/match';
+import colors, { lightGrayGradient } from '../../utils/colors';
 
 const TrendingMatch = props => {
   const { match, cardStyle } = props;
@@ -34,7 +35,7 @@ const TrendingMatch = props => {
       </View>
       <View style={styles.trendingRight}>
         <LinearGradient
-          colors={['#F9FBFC', '#F2F4F7']}
+          colors={lightGrayGradient}
           style={styles.trendingRightGradient}
         >
           <View style={styles.trendingScore}>
@@ -66,9 +67,9 @@ const TrendingMatch = props => {
 const styles = StyleSheet.create({
   trendingCard: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     borderRadius: 5,
-    shadowColor: '#000',
+    shadowColor: colors.black,
     shadowOpacity: 0.2,
     shadowOffset: {
       width: 0,
@@ -84,13 +85,13 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   trendingClubText: {
-    color: '#0E1D31',
+    color: colors.firefly,
     fontSize: 12,
     letterSpacing: 0.14,
   },
   trendingClubDivider: {
     borderTopWidth: 1,
-    borderColor: '#D9E0E9',
+    borderColor: colors.mystic,
   },
   trendingRight: {
     borderTopRightRadius: 5,
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: 70,
     borderLeftWidth: 1,
-    borderColor: '#D9E0E9',
+    borderColor: colors.mystic,
   },
   trendingScore: {
     flex: 1,

@@ -9,6 +9,7 @@ import {
 import PropTypes from 'prop-types';
 import { LinearGradient } from 'expo';
 import Tabs from '../components/tabs/Tabs';
+import colors from '../utils/colors';
 
 export default class Players extends PureComponent {
   constructor(props) {
@@ -151,22 +152,22 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
   loadingContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     paddingVertical: 30,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
   },
   tabs: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
   },
   listHeader: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     height: 15,
   },
   listFooter: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
     height: 15,
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     paddingHorizontal: 30,
     paddingVertical: 15,
   },
@@ -189,7 +190,7 @@ const styles = StyleSheet.create({
   id: {
     fontSize: 12,
     fontWeight: '500',
-    color: '#fff',
+    color: colors.white,
     textAlign: 'center',
   },
   player: {
@@ -200,16 +201,16 @@ const styles = StyleSheet.create({
     marginTop: 6,
     fontSize: 14,
     fontWeight: '500',
-    color: '#0E1D31',
+    color: colors.firefly,
   },
   birthdate: {
     fontSize: 10,
     fontWeight: '500',
-    color: '#818790',
+    color: colors.osloGray,
   },
   ranking: {
     fontSize: 12,
     fontWeight: '500',
-    color: '#0E1D31',
+    color: colors.firefly,
   },
 });

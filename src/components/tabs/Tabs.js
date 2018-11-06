@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import colors from '../../utils/colors';
 
 class Tabs extends PureComponent {
   state = {};
@@ -24,7 +25,7 @@ class Tabs extends PureComponent {
   static defaultProps = {
     selectedIndex: 0,
     scroll: false,
-    highlightColor: '#25ABFB',
+    highlightColor: colors.dodgerBlue,
   };
 
   renderTab(tab, i) {
@@ -90,11 +91,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch',
     height: 60,
-    backgroundColor: '#FAFAFC',
+    backgroundColor: colors.whisper,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
     borderBottomWidth: 1,
-    borderBottomColor: '#D9E0E9',
+    borderBottomColor: colors.mystic,
   },
   scrollView: {},
   tab: {
@@ -103,13 +104,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tabText: {
-    color: '#8F96A0',
+    color: colors.manatee,
     fontSize: 12,
     fontWeight: '500',
     letterSpacing: 0.14,
   },
   selectedTabText: {
-    color: '#0E1D31',
+    color: colors.firefly,
   },
   tabTextWrapper: {
     flex: 1,
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
   tabDivider: {
     width: 1,
     height: 10,
-    backgroundColor: '#E0E4EA',
+    backgroundColor: colors.athensGray,
   },
   selectedTabBorder: {
     position: 'absolute',

@@ -9,6 +9,7 @@ import {
 import { LinearGradient } from 'expo';
 import format from 'date-fns/format';
 import locale from 'date-fns/locale/nl';
+import colors, { blueGradient } from '../../utils/colors';
 
 class Datepicker extends PureComponent {
   state = {};
@@ -48,7 +49,7 @@ class Datepicker extends PureComponent {
   renderSelected(day, month) {
     return (
       <LinearGradient
-        colors={['#00B6FF', '#007FFF']}
+        colors={blueGradient}
         start={[1, 1]}
         end={[0, 0]}
         style={styles.circle}
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   },
   circleBorder: {
     borderWidth: 1,
-    borderColor: '#3a68a3',
+    borderColor: colors.sanMarino,
   },
   disabledTouchable: {
     opacity: 0.3,
@@ -107,14 +108,14 @@ const styles = StyleSheet.create({
   dayText: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#5e87ba',
+    color: colors.hippieBlue,
   },
   monthText: {
     fontSize: 10,
-    color: '#5e87ba',
+    color: colors.hippieBlue,
   },
   selectedText: {
-    color: '#fff',
+    color: colors.white,
   },
 });
 
