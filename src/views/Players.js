@@ -110,7 +110,7 @@ export default class Players extends PureComponent {
   render() {
     if (this.props.data.length === 0) {
       return (
-        <View style={[styles.contentContainerStyle, { paddingVertical: 30 }]}>
+        <View style={styles.loadingContainer}>
           <ActivityIndicator />
         </View>
       );
@@ -127,6 +127,8 @@ export default class Players extends PureComponent {
           style={styles.tabs}
         />
         <FlatList
+          ListHeaderComponent={<View style={styles.listHeader} />}
+          ListFooterComponent={<View style={styles.listFooter} />}
           showsVerticalScrollIndicator={false}
           style={styles.scrollView}
           contentContainerStyle={styles.contentContainerStyle}
@@ -141,10 +143,16 @@ export default class Players extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-  scrollView: {},
+  scrollView: {
+    flex: 1,
+    height: '100%',
+  },
   contentContainerStyle: {
+    paddingBottom: 15,
+  },
+  loadingContainer: {
     backgroundColor: '#fff',
-    paddingVertical: 15,
+    paddingVertical: 30,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
   },
@@ -153,11 +161,22 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
   },
+  listHeader: {
+    backgroundColor: '#fff',
+    height: 15,
+  },
+  listFooter: {
+    backgroundColor: '#fff',
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    height: 15,
+  },
   item: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor: '#fff',
     paddingHorizontal: 30,
     paddingVertical: 15,
   },
