@@ -44,7 +44,7 @@ const Table = ({ head, data, style }) => {
                 style={[
                   styles.cellWrapper,
                   getCellStyle(head, j, 'Wrapper'),
-                  { backgroundColor: i < 2 && '#FAFAFC' },
+                  i < 2 && { backgroundColor: '#fafafc' },
                 ]}
               >
                 <Text
