@@ -16,8 +16,8 @@ class Tabs extends PureComponent {
     selectedIndex: PropTypes.number,
     onPress: PropTypes.func,
     scroll: PropTypes.bool,
-    style: PropTypes.object,
-    tabStyle: PropTypes.object,
+    style: PropTypes.number,
+    tabStyle: PropTypes.number,
     highlightColor: PropTypes.string,
   };
 
