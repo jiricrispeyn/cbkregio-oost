@@ -113,8 +113,12 @@ class TablesScreen extends PureComponent {
           style={styles.trendingScrollView}
           contentContainerStyle={styles.trendingContentContainerStyle}
         >
-          {trendingMatches.matches.map(match => (
-            <TrendingMatch match={match} cardStyle={styles.trendingCardStyle} />
+          {trendingMatches.matches.map((match, i) => (
+            <TrendingMatch
+              key={i}
+              match={match}
+              cardStyle={styles.trendingCardStyle}
+            />
           ))}
         </ScrollView>
       </View>
