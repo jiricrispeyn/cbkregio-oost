@@ -9,9 +9,12 @@ const colors = {
   osloGray: '#818790',
   hippieBlue: '#5e87ba',
   sanMarino: '#3a68a3',
+  chambray: '#3D618F',
   dodgerBlue: '#25ABFB',
   azureRadiance: '#1073F5',
   firefly: '#0E1D31',
+  malachite: '#0CC634',
+  milanoRed: '#C60C0C',
   black: '#000',
 };
 
