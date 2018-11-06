@@ -11,6 +11,7 @@ const TrendingMatch = props => {
       <View style={styles.trendingLeft}>
         <View style={styles.trendingClub}>
           <Text
+            numberOfLines={1}
             style={[
               styles.trendingClubText,
               getClubTextStyle('home', match.winner),
@@ -21,6 +22,7 @@ const TrendingMatch = props => {
         </View>
         <View style={[styles.trendingClub, styles.trendingClubDivider]}>
           <Text
+            numberOfLines={1}
             style={[
               styles.trendingClubText,
               getClubTextStyle('away', match.winner),
