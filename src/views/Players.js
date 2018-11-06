@@ -13,7 +13,7 @@ import Tabs from '../components/tabs/Tabs';
 export default class Players extends PureComponent {
   constructor(props) {
     super(props);
-    this.scrollView = React.createRef();
+    this.listRef = React.createRef();
   }
 
   state = {
@@ -73,6 +73,8 @@ export default class Players extends PureComponent {
       selectedClub
     );
 
+    console.log(this.listRef);
+    this.listRef.scrollToOffset({ x: 0, y: 0, animated: false });
     this.setState({
       selectedClub,
       selectedPlayers,
@@ -131,7 +133,7 @@ export default class Players extends PureComponent {
           data={this.state.selectedPlayers}
           renderItem={({ item }) => this.renderItem(item)}
           keyExtractor={this.keyExtractor}
-          ref={this.scrollView}
+          ref={ref => (this.listRef = ref)}
         />
       </React.Fragment>
     );
