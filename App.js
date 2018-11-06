@@ -16,9 +16,8 @@ export default class App extends React.Component {
           start={[1, 0]}
           end={[0, 1]}
           style={styles.gradient}
-        >
-          <AppNavigator />
-        </LinearGradient>
+        />
+        <AppNavigator />
       </SafeAreaView>
     );
   }
@@ -26,7 +25,7 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
+    flex: 1,
     backgroundColor: '#172E4C',
   },
   gradient: {
