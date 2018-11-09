@@ -28,7 +28,6 @@ export default class PlayersScreen extends PureComponent {
     this.cancelablePromise = makeCancelable(
       Promise.all([getPlayers(league), getEloRanking(league)])
     );
-
     this.cancelablePromise.promise
       .then(([{ players }, { players: eloRanking }]) => {
         this.setState({
@@ -40,7 +39,9 @@ export default class PlayersScreen extends PureComponent {
   }
 
   componentWillUnmount() {
-    this.cancelablePromise.cancel();
+    if (this.cancelablePromise) {
+      this.cancelablePromise.cancel();
+    }
   }
 
   render() {

@@ -18,6 +18,7 @@ import TrendingMatch from '../components/matches/TrendingMatch';
 import Match from '../components/matches/Match';
 import Datepicker from '../components/datepicker/Datepicker';
 import colors from '../utils/colors';
+import { makeCancelable } from '../utils/promise';
 
 class TablesScreen extends PureComponent {
   state = {
@@ -64,29 +65,39 @@ class TablesScreen extends PureComponent {
     );
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     const { navigation } = this.props;
     const league = navigation.getParam('league', null);
-    let { results } = await getLeagueDetail(league);
 
-    results = results.map(result => {
-      const [day, month, year] = result.date.split('-');
-      const _date = new Date(year, month - 1, day);
+    this.cancelablePromise = makeCancelable(getLeagueDetail(league));
+    this.cancelablePromise.promise
+      .then(({ results }) => {
+        results = results.map(result => {
+          const [day, month, year] = result.date.split('-');
+          const _date = new Date(year, month - 1, day);
 
-      return { _date, ...result };
-    });
+          return { _date, ...result };
+        });
 
-    const resultsByDate = keyBy(results, 'date');
-    const trendingMatches = this.getTrendingMatches(results);
-    const selectedDate = this.getDefaultSelected(results);
+        const resultsByDate = keyBy(results, 'date');
+        const trendingMatches = this.getTrendingMatches(results);
+        const selectedDate = this.getDefaultSelected(results);
 
-    this.setState({
-      results,
-      resultsByDate,
-      trendingMatches,
-      selectedDate,
-      isLoading: false,
-    });
+        this.setState({
+          results,
+          resultsByDate,
+          trendingMatches,
+          selectedDate,
+          isLoading: false,
+        });
+      })
+      .catch(reason => console.log(reason));
+  }
+
+  componentWillUnmount() {
+    if (this.cancelablePromise) {
+      this.cancelablePromise.cancel();
+    }
   }
 
   renderTrendingMatches(trendingMatches) {

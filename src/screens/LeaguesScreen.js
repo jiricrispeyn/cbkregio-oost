@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, ScrollView, View, ActivityIndicator } from 'react-native';
 import ListItem from '../components/list/ListItem';
 import { getLeagues } from '../config/api';
+import { makeCancelable } from '../utils/promise';
 
 class LeaguesScreen extends PureComponent {
   state = {
@@ -9,9 +10,19 @@ class LeaguesScreen extends PureComponent {
     isLoading: true,
   };
 
-  async componentDidMount() {
-    const { leagues } = await getLeagues();
-    this.setState({ leagues, isLoading: false });
+  componentDidMount() {
+    this.cancelablePromise = makeCancelable(getLeagues());
+    this.cancelablePromise.promise
+      .then(({ leagues }) => {
+        this.setState({ leagues, isLoading: false });
+      })
+      .catch(reason => console.log(reason));
+  }
+
+  componentWillUnmount() {
+    if (this.cancelablePromise) {
+      this.cancelablePromise.cancel();
+    }
   }
 
   render() {

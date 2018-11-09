@@ -7,6 +7,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import { getLeagueDetail } from '../config/api';
+import { makeCancelable } from '../utils/promise';
 import Table from '../components/table/Table';
 
 class TablesScreen extends PureComponent {
@@ -25,12 +26,23 @@ class TablesScreen extends PureComponent {
     });
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     const { navigation } = this.props;
     const league = navigation.getParam('league', null);
-    const { tables } = await getLeagueDetail(league);
-    const tableData = this.getTableData(tables);
-    this.setState({ tableData, isLoading: false });
+
+    this.cancelablePromise = makeCancelable(getLeagueDetail(league));
+    this.cancelablePromise.promise
+      .then(({ tables }) => {
+        const tableData = this.getTableData(tables);
+        this.setState({ tableData, isLoading: false });
+      })
+      .catch(reason => console.log(reason));
+  }
+
+  componentWillUnmount() {
+    if (this.cancelablePromise) {
+      this.cancelablePromise.cancel();
+    }
   }
 
   _onRefresh = async () => {
