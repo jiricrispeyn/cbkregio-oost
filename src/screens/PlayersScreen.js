@@ -3,7 +3,8 @@ import { StyleSheet, View } from 'react-native';
 import EloRanking from '../views/EloRanking';
 import Players from '../views/Players';
 import Tabs from '../components/tabs/Tabs';
-import { API_URL } from '../config/api';
+import { getPlayers, getEloRanking } from '../config/api';
+import { makeCancelable } from '../utils/promise';
 
 const tabs = ['Spelerslijst', 'Elo Ranking'];
 
@@ -20,30 +21,26 @@ export default class PlayersScreen extends PureComponent {
     });
   }
 
-  async getPlayers(id) {
-    return fetch(`${API_URL}/leagues/${id}/players`)
-      .then(res => res.json())
-      .catch(err => console.log(err));
-  }
-
-  async getEloRanking(id) {
-    return fetch(`${API_URL}/leagues/${id}/elo-ranking`)
-      .then(res => res.json())
-      .catch(err => console.log(err));
-  }
-
-  async componentDidMount() {
+  componentDidMount() {
     const { navigation } = this.props;
-    const league = navigation.getParam('league', '2C');
-    const [{ players }, { players: eloRanking }] = await Promise.all([
-      this.getPlayers(league),
-      this.getEloRanking(league),
-    ]);
+    const league = navigation.getParam('league', null);
 
-    this.setState({
-      eloRanking,
-      players,
-    });
+    this.cancelablePromise = makeCancelable(
+      Promise.all([getPlayers(league), getEloRanking(league)])
+    );
+
+    this.cancelablePromise.promise
+      .then(([{ players }, { players: eloRanking }]) => {
+        this.setState({
+          eloRanking,
+          players,
+        });
+      })
+      .catch(reason => console.log(reason));
+  }
+
+  componentWillUnmount() {
+    this.cancelablePromise.cancel();
   }
 
   render() {
