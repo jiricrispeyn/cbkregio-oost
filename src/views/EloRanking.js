@@ -104,7 +104,6 @@ export default class EloRanking extends PureComponent {
           extraData={selectedView}
           renderItem={({ item }) => this.renderItem(item)}
           keyExtractor={this.keyExtractor}
-          onMomentumScrollBegin={() => console.log('sup')}
         />
         <View style={styles.fabWrapper}>
           <Fab

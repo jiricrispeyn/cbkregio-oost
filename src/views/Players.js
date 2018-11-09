@@ -74,7 +74,6 @@ export default class Players extends PureComponent {
       selectedClub
     );
 
-    console.log(this.listRef);
     this.listRef.scrollToOffset({ x: 0, y: 0, animated: false });
     this.setState({
       selectedClub,
