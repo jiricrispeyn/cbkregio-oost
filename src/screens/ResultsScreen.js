@@ -13,7 +13,7 @@ import isBefore from 'date-fns/is_before';
 import differenceInDays from 'date-fns/difference_in_days';
 import format from 'date-fns/format';
 import locale from 'date-fns/locale/nl';
-import { API_URL } from '../config/api';
+import { getLeagueDetail } from '../config/api';
 import TrendingMatch from '../components/matches/TrendingMatch';
 import Match from '../components/matches/Match';
 import Datepicker from '../components/datepicker/Datepicker';
@@ -28,12 +28,6 @@ class TablesScreen extends PureComponent {
     trendingMatches: null,
     selectedDate: null,
   };
-
-  async getLeagueDetail(id) {
-    return fetch(`${API_URL}/leagues/${id}`)
-      .then(res => res.json())
-      .catch(err => console.log(err));
-  }
 
   getTrendingMatches(results) {
     const now = new Date();
@@ -73,7 +67,7 @@ class TablesScreen extends PureComponent {
   async componentDidMount() {
     const { navigation } = this.props;
     const league = navigation.getParam('league', null);
-    let { results } = await this.getLeagueDetail(league);
+    let { results } = await getLeagueDetail(league);
 
     results = results.map(result => {
       const [day, month, year] = result.date.split('-');
@@ -167,7 +161,7 @@ class TablesScreen extends PureComponent {
 
     const { navigation } = this.props;
     const league = navigation.getParam('league', null);
-    let { results } = await this.getLeagueDetail(league);
+    let { results } = await getLeagueDetail(league);
 
     results = results.map(result => {
       const [day, month, year] = result.date.split('-');

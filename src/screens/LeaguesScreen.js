@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, ScrollView, View, ActivityIndicator } from 'react-native';
 import ListItem from '../components/list/ListItem';
-import { API_URL } from '../config/api';
+import { getLeagues } from '../config/api';
 
 class LeaguesScreen extends PureComponent {
   state = {
@@ -9,14 +9,8 @@ class LeaguesScreen extends PureComponent {
     isLoading: true,
   };
 
-  async getLeagues() {
-    return fetch(`${API_URL}/leagues`)
-      .then(res => res.json())
-      .catch(err => console.log(err));
-  }
-
   async componentDidMount() {
-    const { leagues } = await this.getLeagues();
+    const { leagues } = await getLeagues();
     this.setState({ leagues, isLoading: false });
   }
 

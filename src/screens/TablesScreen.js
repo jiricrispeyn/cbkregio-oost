@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
-import { API_URL } from '../config/api';
+import { getLeagueDetail } from '../config/api';
 import Table from '../components/table/Table';
 
 class TablesScreen extends PureComponent {
@@ -16,12 +16,6 @@ class TablesScreen extends PureComponent {
     tableHead: ['#', 'Club', 'W', 'D', 'L', 'Pt'],
     tableData: [],
   };
-
-  async getLeagueDetail(id) {
-    return fetch(`${API_URL}/leagues/${id}`)
-      .then(res => res.json())
-      .catch(err => console.log(err));
-  }
 
   getTableData(tables) {
     return tables.map(row => {
@@ -34,7 +28,7 @@ class TablesScreen extends PureComponent {
   async componentDidMount() {
     const { navigation } = this.props;
     const league = navigation.getParam('league', null);
-    const { tables } = await this.getLeagueDetail(league);
+    const { tables } = await getLeagueDetail(league);
     const tableData = this.getTableData(tables);
     this.setState({ tableData, isLoading: false });
   }
@@ -44,7 +38,7 @@ class TablesScreen extends PureComponent {
 
     const { navigation } = this.props;
     const league = navigation.getParam('league', null);
-    const { tables } = await this.getLeagueDetail(league);
+    const { tables } = await getLeagueDetail(league);
     const tableData = this.getTableData(tables);
     this.setState({ tableData, refreshing: false });
   };
