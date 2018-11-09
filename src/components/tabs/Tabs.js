@@ -5,6 +5,7 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
+  ViewPropTypes,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import colors from '../../utils/colors';
@@ -17,8 +18,8 @@ class Tabs extends PureComponent {
     selectedIndex: PropTypes.number,
     onPress: PropTypes.func,
     scroll: PropTypes.bool,
-    style: PropTypes.number,
-    tabStyle: PropTypes.number,
+    style: ViewPropTypes.style,
+    tabStyle: ViewPropTypes.style,
     highlightColor: PropTypes.string,
   };
 
