@@ -6,6 +6,7 @@ import {
   ScrollView,
   Clipboard,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import { getAddresses } from '../config/api';
 import { makeCancelable } from '../utils/promise';
@@ -28,8 +29,10 @@ export default class AddressesScreen extends PureComponent {
     this.cancelablePromise = makeCancelable(getAddresses(league));
     this.cancelablePromise.promise
       .then(({ addresses }) => {
-        console.log(addresses);
-        this.setState({ addresses, isLoading: false });
+        const filteredAddresses = addresses.filter(
+          ({ address }) => address.length > 0
+        );
+        this.setState({ addresses: filteredAddresses, isLoading: false });
       })
       .catch(reason => console.log(reason));
   }
@@ -94,6 +97,14 @@ export default class AddressesScreen extends PureComponent {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={[styles.screen, { justifyContent: 'center' }]}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
+
     return (
       <View style={styles.screen}>
         <ScrollView
