@@ -6,6 +6,7 @@ import LeagueDetailScreen from '../screens/LeagueDetailScreen';
 import TablesScreen from '../screens/TablesScreen';
 import ResultsScreen from '../screens/ResultsScreen';
 import PlayersScreen from '../screens/PlayersScreen';
+import AddressesScreen from '../screens/AddressesScreen';
 
 export default createStackNavigator(
   {
@@ -41,6 +42,13 @@ export default createStackNavigator(
       screen: PlayersScreen,
       navigationOptions: ({ navigation }) => ({
         title: 'Spelers',
+        header: props => <CustomHeader {...props} />,
+      }),
+    },
+    Addresses: {
+      screen: AddressesScreen,
+      navigationOptions: ({ navigation }) => ({
+        title: 'Adressen',
         header: props => <CustomHeader {...props} />,
       }),
     },
