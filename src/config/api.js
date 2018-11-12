@@ -23,3 +23,9 @@ export const getEloRanking = async id => {
     .then(res => res.json())
     .catch(err => console.log(err));
 };
+
+export const getAddresses = async id => {
+  return fetch(`${API_URL}/leagues/${id}/addresses`)
+    .then(res => res.json())
+    .catch(err => console.log(err));
+};
