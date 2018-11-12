@@ -3,49 +3,47 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import colors from '../../utils/colors';
 
-class ListItem extends PureComponent {
-  state = {};
-  render() {
-    const {
-      title,
-      rightTitle,
-      rightIcon,
-      subtitle,
-      isFirst,
-      isLast,
-      divider,
-      onPress,
-      listItemStyle,
-    } = this.props;
-    return (
-      <View>
-        {divider && <View style={styles.divider} />}
-        <TouchableOpacity
-          style={[
-            styles.listItem,
-            isFirst && styles.isFirst,
-            isLast && styles.isLast,
-            listItemStyle,
-          ]}
-          onPress={onPress}
-        >
-          <View style={styles.titleWrapper}>
-            <Text style={styles.title}>{title}</Text>
-            {rightTitle && <Text style={styles.rightTitle}>{rightTitle}</Text>}
-            {rightIcon && (
-              <MaterialIcons
-                name={rightIcon}
-                size={30}
-                style={styles.rightIcon}
-              />
-            )}
-          </View>
-          {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+const ListItem = props => {
+  const {
+    title,
+    rightTitle,
+    rightIcon,
+    subtitle,
+    isFirst,
+    isLast,
+    divider,
+    onPress,
+    listItemStyle,
+    component: Component = onPress ? TouchableOpacity : View,
+  } = props;
+  return (
+    <View>
+      {divider && <View style={styles.divider} />}
+      <Component
+        style={[
+          styles.listItem,
+          isFirst && styles.isFirst,
+          isLast && styles.isLast,
+          listItemStyle,
+        ]}
+        onPress={onPress}
+      >
+        <View style={styles.titleWrapper}>
+          <Text style={styles.title}>{title}</Text>
+          {rightTitle && <Text style={styles.rightTitle}>{rightTitle}</Text>}
+          {rightIcon && (
+            <MaterialIcons
+              name={rightIcon}
+              size={30}
+              style={styles.rightIcon}
+            />
+          )}
+        </View>
+        {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+      </Component>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   listItem: {
