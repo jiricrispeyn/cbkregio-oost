@@ -66,14 +66,14 @@ export default class EloRanking extends PureComponent {
           {this.state.selectedView === views.rating ? (
             <Text style={styles.rating}>{rating}</Text>
           ) : (
-            <>
+            <React.Fragment>
               <Text style={styles.sets}>
                 {wins}-{draws}-{losses}
               </Text>
               <Text style={[styles.rating, { marginTop: 5 }]}>
                 {percentage}%
               </Text>
-            </>
+            </React.Fragment>
           )}
         </View>
       </View>
@@ -93,7 +93,7 @@ export default class EloRanking extends PureComponent {
     }
 
     return (
-      <>
+      <React.Fragment>
         <FlatList
           ListHeaderComponent={<View style={styles.listHeader} />}
           ListFooterComponent={<View style={styles.listFooter} />}
@@ -111,7 +111,7 @@ export default class EloRanking extends PureComponent {
             onPress={this.switchView}
           />
         </View>
-      </>
+      </React.Fragment>
     );
   }
 }

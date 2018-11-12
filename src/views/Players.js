@@ -117,7 +117,7 @@ export default class Players extends PureComponent {
     }
 
     return (
-      <>
+      <React.Fragment>
         <Tabs
           tabs={Object.keys(this.state.playersByClub)}
           selectedIndex={this.state.selectedClub}
@@ -137,7 +137,7 @@ export default class Players extends PureComponent {
           keyExtractor={this.keyExtractor}
           ref={ref => (this.listRef = ref)}
         />
-      </>
+      </React.Fragment>
     );
   }
 }
