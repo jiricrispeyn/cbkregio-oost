@@ -1,5 +1,18 @@
 {
   "expo": {
-    "sdkVersion": "31.0.0"
+    "name": "CBK Regio Oost",
+    "description": "Confederale Belgische Kickerbond Limburg",
+    "slug": "cbkregio-oost",
+    "privacy": "unlisted",
+    "sdkVersion": "31.0.0",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "githubUrl": "https://github.com/jiricrispeyn/cbkregio-oost",
+    "orientation": "portrait",
+    "primaryColor": "#25ABFB",
+    "icon": "./src/assets/icon.png"
   }
 }
