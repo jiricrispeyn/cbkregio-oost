@@ -1,9 +1,9 @@
 export const API_URL = 'https://cbkregio-oost.herokuapp.com';
 
-export const getLeagues = async () => {
+export const fetchLeagues = async () => {
   return fetch(`${API_URL}/leagues`)
-    .then(res => res.json())
-    .catch(err => console.log(err));
+    .then(handleErrors)
+    .then(res => res.json());
 };
 
 export const getLeagueDetail = async id => {
@@ -29,3 +29,11 @@ export const getAddresses = async id => {
     .then(res => res.json())
     .catch(err => console.log(err));
 };
+
+function handleErrors(response) {
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+
+  return response;
+}
