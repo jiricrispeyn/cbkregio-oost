@@ -1,40 +1,23 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, ScrollView, View, ActivityIndicator } from 'react-native';
 import ListItem from '../components/list/ListItem';
-import { getLeagues } from '../config/api';
-import { makeCancelable } from '../utils/promise';
+import { connect } from 'react-redux';
+import { fetchLeagues } from '../actions/leagues';
 
 class LeaguesScreen extends PureComponent {
-  state = {
-    leagues: [],
-    isLoading: true,
-  };
-
   componentDidMount() {
-    this.cancelablePromise = makeCancelable(getLeagues());
-    this.cancelablePromise.promise
-      .then(({ leagues }) => {
-        this.setState({ leagues, isLoading: false });
-      })
-      .catch(reason => console.log(reason));
-  }
-
-  componentWillUnmount() {
-    if (this.cancelablePromise) {
-      this.cancelablePromise.cancel();
-    }
+    this.props.dispatch(fetchLeagues());
   }
 
   render() {
-    if (this.state.isLoading) {
+    const { leagues, loading, navigation } = this.props;
+    if (loading) {
       return (
         <View style={[styles.screen, { justifyContent: 'center' }]}>
           <ActivityIndicator />
         </View>
       );
     }
-
-    const { leagues } = this.state;
 
     return (
       <View style={styles.screen}>
@@ -53,7 +36,7 @@ class LeaguesScreen extends PureComponent {
                 isFirst={i === 0}
                 isLast={i === leagues.length - 1}
                 onPress={() =>
-                  this.props.navigation.navigate('LeagueDetail', {
+                  navigation.navigate('LeagueDetail', {
                     league: league.id,
                   })
                 }
@@ -81,4 +64,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LeaguesScreen;
+const mapStateToProps = state => ({
+  leagues: state.leagues.leagues,
+  loading: state.leagues.loading,
+  error: state.leagues.error,
+});
+
+export default connect(mapStateToProps)(LeaguesScreen);
