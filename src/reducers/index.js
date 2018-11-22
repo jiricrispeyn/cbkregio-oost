@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import leagues from './leagues';
+import leaguesList from './leagues';
+import addressesList from './addresses';
 
 export default combineReducers({
-  leagues,
+  leaguesList,
+  addressesList,
 });

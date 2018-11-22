@@ -5,9 +5,9 @@ export function fetchLeagues() {
     dispatch(await fetchLeaguesRequest());
     return api
       .fetchLeagues()
-      .then(res => {
-        dispatch(fetchLeaguesSuccess(res.leagues));
-        return res.leagues;
+      .then(({ leagues }) => {
+        dispatch(fetchLeaguesSuccess(leagues));
+        return leagues;
       })
       .catch(err => dispatch(fetchLeaguesFailure(err)));
   };

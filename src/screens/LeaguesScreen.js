@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, ScrollView, View, ActivityIndicator } from 'react-native';
-import ListItem from '../components/list/ListItem';
 import { connect } from 'react-redux';
+import ListItem from '../components/list/ListItem';
 import { fetchLeagues } from '../actions/leagues';
 
 class LeaguesScreen extends PureComponent {
@@ -65,9 +65,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  leagues: state.leagues.leagues,
-  loading: state.leagues.loading,
-  error: state.leagues.error,
+  leagues: state.leaguesList.leagues,
+  loading: state.leaguesList.loading,
+  error: state.leaguesList.error,
 });
 
 export default connect(mapStateToProps)(LeaguesScreen);
