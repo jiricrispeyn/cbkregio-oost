@@ -8,39 +8,22 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import { getAddresses } from '../config/api';
-import { makeCancelable } from '../utils/promise';
+import { connect } from 'react-redux';
+import { fetchAddresses } from '../actions/addresses';
 import Swipeout from 'react-native-swipeout';
 import { createOpenLink } from 'react-native-open-maps';
 import ListItem from '../components/list/ListItem';
 import colors from '../utils/colors';
 
-export default class AddressesScreen extends PureComponent {
+class AddressesScreen extends PureComponent {
   state = {
-    addresses: [],
-    isLoading: true,
     rowID: null,
   };
 
   componentDidMount() {
-    const { navigation } = this.props;
+    const { navigation, dispatch } = this.props;
     const league = navigation.getParam('league', null);
-
-    this.cancelablePromise = makeCancelable(getAddresses(league));
-    this.cancelablePromise.promise
-      .then(({ addresses }) => {
-        const filteredAddresses = addresses.filter(
-          ({ address }) => address.length > 0
-        );
-        this.setState({ addresses: filteredAddresses, isLoading: false });
-      })
-      .catch(reason => console.log(reason));
-  }
-
-  componentWillUnmount() {
-    if (this.cancelablePromise) {
-      this.cancelablePromise.cancel();
-    }
+    dispatch(fetchAddresses(league));
   }
 
   swipeoutBtns(address) {
@@ -97,7 +80,11 @@ export default class AddressesScreen extends PureComponent {
   }
 
   render() {
-    if (this.state.isLoading) {
+    const { addresses, loading } = this.props;
+
+    return <View />;
+
+    if (loading) {
       return (
         <View style={[styles.screen, { justifyContent: 'center' }]}>
           <ActivityIndicator />
@@ -112,13 +99,13 @@ export default class AddressesScreen extends PureComponent {
           contentContainerStyle={styles.contentContainerStyle}
           showsVerticalScrollIndicator={false}
         >
-          {this.state.addresses.map((address, i) => (
+          {addresses.map((address, i) => (
             <React.Fragment key={i}>
               {i > 0 && <View style={styles.divider} />}
               <Swipeout
                 style={[
                   i === 0 && styles.isFirst,
-                  i === this.state.addresses.length - 1 && styles.isLast,
+                  i === addresses.length - 1 && styles.isLast,
                 ]}
                 backgroundColor={colors.white}
                 close={this.state.rowID !== i}
@@ -175,3 +162,11 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
 });
+
+const mapStateToProps = state => ({
+  // addresses: state.addresses.addresses,
+  // loading: state.addresses.loading,
+  // error: state.addresses.error,
+});
+
+export default connect(mapStateToProps)(AddressesScreen);
