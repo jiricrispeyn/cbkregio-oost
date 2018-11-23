@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchAddresses } from '../actions/addresses';
+import { getSetLeagueAddresses } from '../selectors';
 import Swipeout from 'react-native-swipeout';
 import { createOpenLink } from 'react-native-open-maps';
 import ListItem from '../components/list/ListItem';
@@ -82,9 +83,7 @@ class AddressesScreen extends PureComponent {
   render() {
     const { addresses, loading } = this.props;
 
-    return <View />;
-
-    if (loading) {
+    if (loading && addresses.length === 0) {
       return (
         <View style={[styles.screen, { justifyContent: 'center' }]}>
           <ActivityIndicator />
@@ -99,31 +98,33 @@ class AddressesScreen extends PureComponent {
           contentContainerStyle={styles.contentContainerStyle}
           showsVerticalScrollIndicator={false}
         >
-          {addresses.map((address, i) => (
-            <React.Fragment key={i}>
-              {i > 0 && <View style={styles.divider} />}
-              <Swipeout
-                style={[
-                  i === 0 && styles.isFirst,
-                  i === addresses.length - 1 && styles.isLast,
-                ]}
-                backgroundColor={colors.white}
-                close={this.state.rowID !== i}
-                key={i}
-                rowID={i}
-                right={this.swipeoutBtns(address)}
-                onOpen={(sectionID, rowID) => {
-                  this.setState({ rowID });
-                }}
-              >
-                <ListItem
-                  title={address.club}
-                  subtitle={address.address}
-                  rightTitle={address.place}
-                />
-              </Swipeout>
-            </React.Fragment>
-          ))}
+          {addresses
+            .filter(address => address.club !== 'BYE - VRIJ')
+            .map((address, i) => (
+              <React.Fragment key={i}>
+                {i > 0 && <View style={styles.divider} />}
+                <Swipeout
+                  style={[
+                    i === 0 && styles.isFirst,
+                    i === addresses.length - 1 && styles.isLast,
+                  ]}
+                  backgroundColor={colors.white}
+                  close={this.state.rowID !== i}
+                  key={i}
+                  rowID={i}
+                  right={this.swipeoutBtns(address)}
+                  onOpen={(sectionID, rowID) => {
+                    this.setState({ rowID });
+                  }}
+                >
+                  <ListItem
+                    title={address.club}
+                    subtitle={address.address}
+                    rightTitle={address.place}
+                  />
+                </Swipeout>
+              </React.Fragment>
+            ))}
         </ScrollView>
       </View>
     );
@@ -164,9 +165,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  // addresses: state.addresses.addresses,
-  // loading: state.addresses.loading,
-  // error: state.addresses.error,
+  addresses: getSetLeagueAddresses(state),
+  loading: state.addressesList.loading,
+  error: state.addressesList.error,
 });
 
 export default connect(mapStateToProps)(AddressesScreen);
