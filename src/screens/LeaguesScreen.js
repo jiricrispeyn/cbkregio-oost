@@ -3,14 +3,21 @@ import { StyleSheet, ScrollView, View, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import ListItem from '../components/list/ListItem';
 import { fetchLeagues } from '../actions/leagues';
+import { setLeague } from '../actions/nav';
 
 class LeaguesScreen extends PureComponent {
+  onPress(league) {
+    const { dispatch, navigation } = this.props;
+    dispatch(setLeague(league));
+    navigation.navigate('LeagueDetail', { league });
+  }
+
   componentDidMount() {
     this.props.dispatch(fetchLeagues());
   }
 
   render() {
-    const { leagues, loading, navigation } = this.props;
+    const { leagues, loading } = this.props;
     if (loading) {
       return (
         <View style={[styles.screen, { justifyContent: 'center' }]}>
@@ -35,11 +42,7 @@ class LeaguesScreen extends PureComponent {
                 divider={i !== 0}
                 isFirst={i === 0}
                 isLast={i === leagues.length - 1}
-                onPress={() =>
-                  navigation.navigate('LeagueDetail', {
-                    league: league.id,
-                  })
-                }
+                onPress={() => this.onPress(league.id)}
               />
             ))}
           </View>
