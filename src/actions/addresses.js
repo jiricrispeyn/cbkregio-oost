@@ -24,6 +24,7 @@ export const fetchAddressesRequest = () => ({
 export const fetchAddressesSuccess = addresses => ({
   type: FETCH_ADDRESSES_SUCCESS,
   payload: addresses,
+  lastUpdated: new Date(),
 });
 
 export const fetchAddressesFailure = error => ({
