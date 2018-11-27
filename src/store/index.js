@@ -7,7 +7,7 @@ import rootReducer from '../reducers';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['leagues', 'addresses'],
+  whitelist: ['leagues', 'addresses', 'leagueDetail'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const middleware = [thunk];
