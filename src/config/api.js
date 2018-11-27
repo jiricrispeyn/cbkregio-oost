@@ -6,7 +6,7 @@ export const fetchLeagues = async () => {
     .then(res => res.json());
 };
 
-export const getLeagueDetail = async id => {
+export const fetchLeagueDetail = async id => {
   return fetch(`${API_URL}/leagues/${id}`)
     .then(res => res.json())
     .catch(err => console.log(err));
