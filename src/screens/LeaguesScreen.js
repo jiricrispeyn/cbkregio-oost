@@ -68,9 +68,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  leagues: state.leaguesList.leagues,
-  loading: state.leaguesList.loading,
-  error: state.leaguesList.error,
+  leagues: state.leagues.items,
+  loading: state.leagues.loading,
+  error: state.leagues.error,
 });
 
 export default connect(mapStateToProps)(LeaguesScreen);

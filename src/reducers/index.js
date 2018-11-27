@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import leaguesList from './leagues';
-import addressesList from './addresses';
+import leagues from './leagues';
+import addresses from './addresses';
 import nav from './nav';
 
 export default combineReducers({
-  leaguesList,
-  addressesList,
+  leagues,
+  addresses,
   nav,
 });
