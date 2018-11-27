@@ -1,8 +1,9 @@
 import { createSelector } from 'reselect';
 import { get } from 'lodash';
 
-const addressesSelector = state => state.addresses;
 const activeLeagueSelector = state => state.nav;
+const addressesSelector = state => state.addresses;
+const leagueDetailSelector = state => state.leagueDetail;
 
 export const getActiveAddresses = createSelector(
   addressesSelector,
@@ -20,4 +21,23 @@ export const getActiveAddressesError = createSelector(
   addressesSelector,
   activeLeagueSelector,
   (addresses, activeLeague) => get(addresses, `${activeLeague}.error`)
+);
+
+export const getActiveTables = createSelector(
+  leagueDetailSelector,
+  activeLeagueSelector,
+  (leagueDetail, activeLeague) =>
+    get(leagueDetail, `${activeLeague}.tables`) || []
+);
+
+export const isActiveLeagueDetailLoading = createSelector(
+  leagueDetailSelector,
+  activeLeagueSelector,
+  (leagueDetail, activeLeague) => get(leagueDetail, `${activeLeague}.loading`)
+);
+
+export const getActiveLeagueDetailError = createSelector(
+  leagueDetailSelector,
+  activeLeagueSelector,
+  (leagueDetail, activeLeague) => get(leagueDetail, `${activeLeague}.error`)
 );
