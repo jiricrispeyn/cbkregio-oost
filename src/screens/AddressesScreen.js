@@ -10,7 +10,11 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchAddresses } from '../actions/addresses';
-import { getSetLeagueAddresses } from '../selectors';
+import {
+  getActiveAddresses,
+  isActiveAddressesLoading,
+  getActiveAddressesError,
+} from '../selectors';
 import Swipeout from 'react-native-swipeout';
 import { createOpenLink } from 'react-native-open-maps';
 import ListItem from '../components/list/ListItem';
@@ -165,9 +169,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  addresses: getSetLeagueAddresses(state),
-  loading: state.addressesList.loading,
-  error: state.addressesList.error,
+  addresses: getActiveAddresses(state),
+  loading: isActiveAddressesLoading(state),
+  error: getActiveAddressesError(state),
 });
 
 export default connect(mapStateToProps)(AddressesScreen);
