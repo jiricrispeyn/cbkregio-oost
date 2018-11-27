@@ -3,7 +3,6 @@ import {
   FETCH_ADDRESSES_SUCCESS,
   FETCH_ADDRESSES_FAILURE,
 } from '../actions/addresses';
-import { get } from 'lodash';
 
 const initialState = {};
 
