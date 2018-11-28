@@ -6,16 +6,20 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
-import { getLeagueDetail } from '../config/api';
-import { makeCancelable } from '../utils/promise';
+import { connect } from 'react-redux';
+import {
+  getActiveTables,
+  isActiveLeagueDetailLoading,
+  getActiveLeagueDetailError,
+} from '../selectors';
+import { fetchLeagueDetail } from '../actions/league-detail';
 import Table from '../components/table/Table';
+
+const tableHead = ['#', 'Club', 'W', 'D', 'L', 'Pt'];
 
 class TablesScreen extends PureComponent {
   state = {
-    isLoading: true,
     refreshing: false,
-    tableHead: ['#', 'Club', 'W', 'D', 'L', 'Pt'],
-    tableData: [],
   };
 
   getTableData(tables) {
@@ -27,38 +31,23 @@ class TablesScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const { navigation } = this.props;
+    const { navigation, dispatch } = this.props;
     const league = navigation.getParam('league', null);
-
-    this.cancelablePromise = makeCancelable(getLeagueDetail(league));
-    this.cancelablePromise.promise
-      .then(({ tables }) => {
-        const tableData = this.getTableData(tables);
-        this.setState({ tableData, isLoading: false });
-      })
-      .catch(reason => console.log(reason));
-  }
-
-  componentWillUnmount() {
-    if (this.cancelablePromise) {
-      this.cancelablePromise.cancel();
-    }
+    dispatch(fetchLeagueDetail(league));
   }
 
   _onRefresh = async () => {
     this.setState({ refreshing: true });
-
-    const { navigation } = this.props;
+    const { navigation, dispatch } = this.props;
     const league = navigation.getParam('league', null);
-    const { tables } = await getLeagueDetail(league);
-    const tableData = this.getTableData(tables);
-    this.setState({ tableData, refreshing: false });
+    await dispatch(fetchLeagueDetail(league));
+    this.setState({ refreshing: false });
   };
 
   render() {
-    const { isLoading, tableHead, tableData } = this.state;
+    const tableData = this.getTableData(this.props.tables);
 
-    if (isLoading) {
+    if (this.props.loading && !this.state.refreshing) {
       return (
         <View style={[styles.screen, { justifyContent: 'center' }]}>
           <ActivityIndicator />
@@ -101,4 +90,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TablesScreen;
+const mapStateToProps = state => ({
+  tables: getActiveTables(state),
+  loading: isActiveLeagueDetailLoading(state),
+  error: getActiveLeagueDetailError(state),
+});
+
+export default connect(mapStateToProps)(TablesScreen);
