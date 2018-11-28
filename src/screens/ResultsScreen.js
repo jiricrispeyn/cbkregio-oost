@@ -13,7 +13,7 @@ import isBefore from 'date-fns/is_before';
 import differenceInDays from 'date-fns/difference_in_days';
 import format from 'date-fns/format';
 import locale from 'date-fns/locale/nl';
-import { getLeagueDetail } from '../config/api';
+import { fetchLeagueDetail } from '../config/api';
 import TrendingMatch from '../components/matches/TrendingMatch';
 import Match from '../components/matches/Match';
 import Datepicker from '../components/datepicker/Datepicker';
@@ -69,7 +69,7 @@ class TablesScreen extends PureComponent {
     const { navigation } = this.props;
     const league = navigation.getParam('league', null);
 
-    this.cancelablePromise = makeCancelable(getLeagueDetail(league));
+    this.cancelablePromise = makeCancelable(fetchLeagueDetail(league));
     this.cancelablePromise.promise
       .then(({ results }) => {
         results = results.map(result => {
@@ -172,7 +172,7 @@ class TablesScreen extends PureComponent {
 
     const { navigation } = this.props;
     const league = navigation.getParam('league', null);
-    let { results } = await getLeagueDetail(league);
+    let { results } = await fetchLeagueDetail(league);
 
     results = results.map(result => {
       const [day, month, year] = result.date.split('-');
