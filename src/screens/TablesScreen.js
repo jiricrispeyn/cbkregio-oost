@@ -45,9 +45,11 @@ class TablesScreen extends PureComponent {
   };
 
   render() {
-    const tableData = this.getTableData(this.props.tables);
+    const { refreshing } = this.state;
+    const { tables, loading } = this.props;
+    const tableData = this.getTableData(tables);
 
-    if (this.props.loading && !this.state.refreshing) {
+    if (loading && !refreshing && tables.length === 0) {
       return (
         <View style={[styles.screen, { justifyContent: 'center' }]}>
           <ActivityIndicator />
@@ -63,7 +65,7 @@ class TablesScreen extends PureComponent {
           showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl
-              refreshing={this.state.refreshing}
+              refreshing={refreshing}
               onRefresh={this._onRefresh}
             />
           }
