@@ -30,6 +30,13 @@ export const getActiveTables = createSelector(
     get(leagueDetail, `${activeLeague}.tables`) || []
 );
 
+export const getActiveResults = createSelector(
+  leagueDetailSelector,
+  activeLeagueSelector,
+  (leagueDetail, activeLeague) =>
+    get(leagueDetail, `${activeLeague}.results`) || []
+);
+
 export const isActiveLeagueDetailLoading = createSelector(
   leagueDetailSelector,
   activeLeagueSelector,
