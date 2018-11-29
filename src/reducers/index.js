@@ -3,6 +3,7 @@ import leagues from './leagues';
 import addresses from './addresses';
 import leagueDetail from './league-detail';
 import players from './players';
+import eloRanking from './elo-ranking';
 import nav from './nav';
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
   addresses,
   leagueDetail,
   players,
+  eloRanking,
   nav,
 });
