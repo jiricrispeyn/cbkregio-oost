@@ -5,7 +5,7 @@ import {
 } from '../actions/leagues';
 
 const initialState = {
-  items: [],
+  data: [],
   loading: false,
   error: null,
 };
@@ -22,14 +22,14 @@ export default function leaguesReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        items: action.payload.leagues,
+        data: action.payload.leagues,
       };
     case FETCH_LEAGUES_FAILURE: {
       return {
         ...state,
         loading: false,
         error: action.payload.error,
-        items: [],
+        data: [],
       };
     }
     default:

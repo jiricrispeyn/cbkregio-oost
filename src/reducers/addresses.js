@@ -16,7 +16,7 @@ export default function addressesReducer(state = initialState, action) {
           ...leagueState,
           loading: true,
           error: null,
-          items: leagueState.items || [],
+          data: leagueState.data || [],
         },
       };
     case FETCH_ADDRESSES_SUCCESS:
@@ -25,7 +25,7 @@ export default function addressesReducer(state = initialState, action) {
         [action.payload.league]: {
           loading: false,
           error: null,
-          items: action.payload.addresses,
+          data: action.payload.addresses,
           receivedAt: action.receivedAt,
         },
       };
@@ -35,7 +35,7 @@ export default function addressesReducer(state = initialState, action) {
         [league]: {
           loading: false,
           error: action.payload.error,
-          items: [],
+          data: [],
         },
       };
     }
