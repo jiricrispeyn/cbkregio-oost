@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  leagues: state.leagues.items,
+  leagues: state.leagues.data,
   loading: state.leagues.loading,
   error: state.leagues.error,
 });

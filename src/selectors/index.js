@@ -8,7 +8,7 @@ const leagueDetailSelector = state => state.leagueDetail;
 export const getActiveAddresses = createSelector(
   addressesSelector,
   activeLeagueSelector,
-  (addresses, activeLeague) => get(addresses, `${activeLeague}.items`) || []
+  (addresses, activeLeague) => get(addresses, `${activeLeague}.data`) || []
 );
 
 export const isActiveAddressesLoading = createSelector(
