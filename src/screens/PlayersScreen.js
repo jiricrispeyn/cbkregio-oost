@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import EloRanking from '../views/EloRanking';
 import Players from '../views/Players';
 import Tabs from '../components/tabs/Tabs';
-import { getPlayers, getEloRanking } from '../config/api';
+import { fetchPlayers, getEloRanking } from '../config/api';
 import { makeCancelable } from '../utils/promise';
 
 const tabs = ['Spelerslijst', 'Elo Ranking'];
@@ -26,7 +26,7 @@ export default class PlayersScreen extends PureComponent {
     const league = navigation.getParam('league', null);
 
     this.cancelablePromise = makeCancelable(
-      Promise.all([getPlayers(league), getEloRanking(league)])
+      Promise.all([fetchPlayers(league), getEloRanking(league)])
     );
     this.cancelablePromise.promise
       .then(([{ players }, { players: eloRanking }]) => {
