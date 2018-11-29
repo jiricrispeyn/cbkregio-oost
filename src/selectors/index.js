@@ -4,6 +4,8 @@ import { get } from 'lodash';
 const activeLeagueSelector = state => state.nav;
 const addressesSelector = state => state.addresses;
 const leagueDetailSelector = state => state.leagueDetail;
+const playersSelector = state => state.players;
+const eloRankingSelector = state => state.eloRanking;
 
 export const getActiveAddresses = createSelector(
   addressesSelector,
@@ -47,4 +49,40 @@ export const getActiveLeagueDetailError = createSelector(
   leagueDetailSelector,
   activeLeagueSelector,
   (leagueDetail, activeLeague) => get(leagueDetail, `${activeLeague}.error`)
+);
+
+export const getActivePlayers = createSelector(
+  playersSelector,
+  activeLeagueSelector,
+  (players, activeLeague) => get(players, `${activeLeague}.data`) || []
+);
+
+export const isActivePlayersLoading = createSelector(
+  playersSelector,
+  activeLeagueSelector,
+  (players, activeLeague) => get(players, `${activeLeague}.loading`)
+);
+
+export const getActivePlayersError = createSelector(
+  playersSelector,
+  activeLeagueSelector,
+  (players, activeLeague) => get(players, `${activeLeague}.error`)
+);
+
+export const getActiveEloRanking = createSelector(
+  eloRankingSelector,
+  activeLeagueSelector,
+  (players, activeLeague) => get(players, `${activeLeague}.data`) || []
+);
+
+export const isActiveEloRankingLoading = createSelector(
+  eloRankingSelector,
+  activeLeagueSelector,
+  (players, activeLeague) => get(players, `${activeLeague}.loading`)
+);
+
+export const getActiveEloRankingError = createSelector(
+  eloRankingSelector,
+  activeLeagueSelector,
+  (players, activeLeague) => get(players, `${activeLeague}.error`)
 );
