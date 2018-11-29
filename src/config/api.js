@@ -18,7 +18,7 @@ export const fetchPlayers = async id => {
     .catch(err => console.log(err));
 };
 
-export const getEloRanking = async id => {
+export const fetchEloRanking = async id => {
   return fetch(`${API_URL}/leagues/${id}/elo-ranking`)
     .then(res => res.json())
     .catch(err => console.log(err));
