@@ -27,6 +27,7 @@ import colors from '../utils/colors';
 
 class ResultsScreen extends PureComponent {
   state = {
+    results: [],
     refreshing: false,
     selectedDate: null,
   };
@@ -67,22 +68,44 @@ class ResultsScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const { navigation, dispatch, results } = this.props;
-
-    if (results.length > 0) {
-      const selectedDate = this.getDefaultSelected(results);
-      this.setState({ selectedDate });
-    }
-
+    const { navigation, dispatch } = this.props;
     const league = navigation.getParam('league', null);
     dispatch(fetchLeagueDetail(league));
+    this.setResults(this.props.results);
   }
 
-  componentDidUpdate() {
-    if (!this.state.selectedDate && this.props.results.length > 0) {
-      const selectedDate = this.getDefaultSelected(this.props.results);
-      this.setState({ selectedDate });
+  componentDidUpdate(prevProps) {
+    if (
+      JSON.stringify(this.props.results) !== JSON.stringify(prevProps.results)
+    ) {
+      this.setResults(this.props.results);
     }
+  }
+
+  setResults(results) {
+    if (results.length === 0) {
+      return;
+    }
+
+    results = results.map(result => {
+      const [day, month, year] = result.date.split('-');
+      const _date = new Date(year, month - 1, day);
+
+      return { ...result, _date };
+    });
+
+    this.setState(prevState => {
+      if (prevState.selectedDate) {
+        return { results };
+      }
+
+      const selectedDate = this.getDefaultSelected(results);
+
+      return {
+        results,
+        selectedDate,
+      };
+    });
   }
 
   _onRefresh = async () => {
@@ -163,8 +186,8 @@ class ResultsScreen extends PureComponent {
   }
 
   render() {
-    const { refreshing, selectedDate } = this.state;
-    const { results, loading } = this.props;
+    const { refreshing, selectedDate, results } = this.state;
+    const { loading } = this.props;
 
     if (loading && !refreshing && results.length === 0) {
       return (
@@ -174,15 +197,9 @@ class ResultsScreen extends PureComponent {
       );
     }
 
-    const _results = results.map(result => {
-      const [day, month, year] = result.date.split('-');
-      const _date = new Date(year, month - 1, day);
-
-      return { _date, ...result };
-    });
-    const resultsByDate = keyBy(_results, 'date');
-    const trendingMatches = this.getTrendingMatches(_results);
-    const { dates, disabledDates } = this.getDates(_results);
+    const resultsByDate = keyBy(results, 'date');
+    const trendingMatches = this.getTrendingMatches(results);
+    const { dates, disabledDates } = this.getDates(results);
 
     return (
       <View style={styles.screen}>
