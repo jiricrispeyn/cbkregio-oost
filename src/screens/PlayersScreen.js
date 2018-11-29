@@ -1,18 +1,25 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { connect } from 'react-redux';
+import {
+  getActivePlayers,
+  isActivePlayersLoading,
+  getActivePlayersError,
+  getActiveEloRanking,
+  isActiveEloRankingLoading,
+  getActiveEloRankingError,
+} from '../selectors';
 import EloRanking from '../views/EloRanking';
 import Players from '../views/Players';
 import Tabs from '../components/tabs/Tabs';
-import { fetchPlayers, getEloRanking } from '../config/api';
-import { makeCancelable } from '../utils/promise';
+import { fetchPlayers } from '../actions/players';
+import { fetchEloRanking } from '../actions/elo-ranking';
 
 const tabs = ['Spelerslijst', 'Elo Ranking'];
 
-export default class PlayersScreen extends PureComponent {
+class PlayersScreen extends PureComponent {
   state = {
     selectedIndex: 0,
-    players: [],
-    eloRanking: [],
   };
 
   onPress(selectedIndex) {
@@ -22,30 +29,14 @@ export default class PlayersScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const { navigation } = this.props;
+    const { navigation, dispatch } = this.props;
     const league = navigation.getParam('league', null);
-
-    this.cancelablePromise = makeCancelable(
-      Promise.all([fetchPlayers(league), getEloRanking(league)])
-    );
-    this.cancelablePromise.promise
-      .then(([{ players }, { players: eloRanking }]) => {
-        this.setState({
-          eloRanking,
-          players,
-        });
-      })
-      .catch(reason => console.log(reason));
-  }
-
-  componentWillUnmount() {
-    if (this.cancelablePromise) {
-      this.cancelablePromise.cancel();
-    }
+    dispatch(fetchPlayers(league));
+    dispatch(fetchEloRanking(league));
   }
 
   render() {
-    const { selectedIndex, players, eloRanking } = this.state;
+    const { selectedIndex } = this.state;
 
     return (
       <View style={styles.screen}>
@@ -54,8 +45,8 @@ export default class PlayersScreen extends PureComponent {
           selectedIndex={selectedIndex}
           onPress={this.onPress.bind(this)}
         />
-        {selectedIndex === 0 && <Players data={players} />}
-        {selectedIndex === 1 && <EloRanking data={eloRanking} />}
+        {selectedIndex === 0 && <Players data={this.props.players} />}
+        {selectedIndex === 1 && <EloRanking data={this.props.eloRanking} />}
       </View>
     );
   }
@@ -67,3 +58,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
 });
+
+const mapStateToProps = state => ({
+  players: getActivePlayers(state),
+  playersLoading: isActivePlayersLoading(state),
+  playersError: getActivePlayersError(state),
+  eloRanking: getActiveEloRanking(state),
+  eloRankingLoading: isActiveEloRankingLoading(state),
+  eloRankingError: getActiveEloRankingError(state),
+});
+
+export default connect(mapStateToProps)(PlayersScreen);
