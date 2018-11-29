@@ -7,26 +7,27 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
+import { connect } from 'react-redux';
 import { keyBy } from 'lodash';
 import closestIndexTo from 'date-fns/closest_index_to';
 import isBefore from 'date-fns/is_before';
 import differenceInDays from 'date-fns/difference_in_days';
 import format from 'date-fns/format';
 import locale from 'date-fns/locale/nl';
-import { fetchLeagueDetail } from '../config/api';
+import {
+  getActiveResults,
+  isActiveLeagueDetailLoading,
+  getActiveLeagueDetailError,
+} from '../selectors';
+import { fetchLeagueDetail } from '../actions/league-detail';
 import TrendingMatch from '../components/matches/TrendingMatch';
 import Match from '../components/matches/Match';
 import Datepicker from '../components/datepicker/Datepicker';
 import colors from '../utils/colors';
-import { makeCancelable } from '../utils/promise';
 
-class TablesScreen extends PureComponent {
+class ResultsScreen extends PureComponent {
   state = {
-    isLoading: true,
     refreshing: false,
-    results: [],
-    resultsByDate: null,
-    trendingMatches: null,
     selectedDate: null,
   };
 
@@ -66,38 +67,36 @@ class TablesScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const { navigation } = this.props;
+    const { navigation, dispatch, results } = this.props;
+
+    if (results.length > 0) {
+      const selectedDate = this.getDefaultSelected(results);
+      this.setState({ selectedDate });
+    }
+
     const league = navigation.getParam('league', null);
-
-    this.cancelablePromise = makeCancelable(fetchLeagueDetail(league));
-    this.cancelablePromise.promise
-      .then(({ results }) => {
-        results = results.map(result => {
-          const [day, month, year] = result.date.split('-');
-          const _date = new Date(year, month - 1, day);
-
-          return { _date, ...result };
-        });
-
-        const resultsByDate = keyBy(results, 'date');
-        const trendingMatches = this.getTrendingMatches(results);
-        const selectedDate = this.getDefaultSelected(results);
-
-        this.setState({
-          results,
-          resultsByDate,
-          trendingMatches,
-          selectedDate,
-          isLoading: false,
-        });
-      })
-      .catch(reason => console.log(reason));
+    dispatch(fetchLeagueDetail(league));
   }
 
-  componentWillUnmount() {
-    if (this.cancelablePromise) {
-      this.cancelablePromise.cancel();
+  componentDidUpdate() {
+    if (!this.state.selectedDate && this.props.results.length > 0) {
+      const selectedDate = this.getDefaultSelected(this.props.results);
+      this.setState({ selectedDate });
     }
+  }
+
+  _onRefresh = async () => {
+    this.setState({ refreshing: true });
+    const { navigation, dispatch } = this.props;
+    const league = navigation.getParam('league', null);
+    await dispatch(fetchLeagueDetail(league));
+    this.setState({
+      refreshing: false,
+    });
+  };
+
+  onPress(selectedDate) {
+    this.setState({ selectedDate });
   }
 
   renderTrendingMatches(trendingMatches) {
@@ -163,44 +162,11 @@ class TablesScreen extends PureComponent {
     );
   }
 
-  onPress(selectedDate) {
-    this.setState({ selectedDate });
-  }
-
-  _onRefresh = async () => {
-    this.setState({ refreshing: true });
-
-    const { navigation } = this.props;
-    const league = navigation.getParam('league', null);
-    let { results } = await fetchLeagueDetail(league);
-
-    results = results.map(result => {
-      const [day, month, year] = result.date.split('-');
-      const _date = new Date(year, month - 1, day);
-
-      return { _date, ...result };
-    });
-
-    const resultsByDate = keyBy(results, 'date');
-    const trendingMatches = this.getTrendingMatches(results);
-
-    this.setState({
-      refreshing: false,
-      resultsByDate,
-      trendingMatches,
-    });
-  };
-
   render() {
-    const {
-      isLoading,
-      results,
-      resultsByDate,
-      trendingMatches,
-      selectedDate,
-    } = this.state;
+    const { refreshing, selectedDate } = this.state;
+    const { results, loading } = this.props;
 
-    if (isLoading) {
+    if (loading && !refreshing && results.length === 0) {
       return (
         <View style={[styles.screen, { justifyContent: 'center' }]}>
           <ActivityIndicator />
@@ -208,7 +174,15 @@ class TablesScreen extends PureComponent {
       );
     }
 
-    const { dates, disabledDates } = this.getDates(results);
+    const _results = results.map(result => {
+      const [day, month, year] = result.date.split('-');
+      const _date = new Date(year, month - 1, day);
+
+      return { _date, ...result };
+    });
+    const resultsByDate = keyBy(_results, 'date');
+    const trendingMatches = this.getTrendingMatches(_results);
+    const { dates, disabledDates } = this.getDates(_results);
 
     return (
       <View style={styles.screen}>
@@ -225,7 +199,7 @@ class TablesScreen extends PureComponent {
           contentContainerStyle={styles.contentContainerStyle}
           refreshControl={
             <RefreshControl
-              refreshing={this.state.refreshing}
+              refreshing={refreshing}
               onRefresh={this._onRefresh}
             />
           }
@@ -288,4 +262,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TablesScreen;
+const mapStateToProps = state => ({
+  results: getActiveResults(state),
+  loading: isActiveLeagueDetailLoading(state),
+  error: getActiveLeagueDetailError(state),
+});
+
+export default connect(mapStateToProps)(ResultsScreen);
