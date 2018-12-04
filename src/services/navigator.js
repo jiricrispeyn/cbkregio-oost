@@ -7,6 +7,7 @@ import TablesScreen from '../screens/TablesScreen';
 import ResultsScreen from '../screens/ResultsScreen';
 import PlayersScreen from '../screens/PlayersScreen';
 import AddressesScreen from '../screens/AddressesScreen';
+import colors from '../utils/colors';
 
 export default createStackNavigator(
   {
@@ -56,12 +57,10 @@ export default createStackNavigator(
   {
     initialRouteName: 'Leagues',
     cardStyle: {
-      backgroundColor: 'transparent',
+      backgroundColor: colors.firefly,
     },
     transitionConfig: () => ({
-      containerStyle: {
-        backgroundColor: 'transparent',
-      },
+      containerStyle: {},
     }),
   }
 );

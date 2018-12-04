@@ -63,7 +63,7 @@ class CustomHeader extends PureComponent {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'flex-end',
-    backgroundColor: 'transparent',
+    backgroundColor: colors.firefly,
     height: 116,
     paddingTop: 36,
     paddingBottom: 12,
