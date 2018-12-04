@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import colors from '../../utils/colors';
@@ -22,6 +22,7 @@ const ListItem = props => {
       <Component
         style={[
           styles.listItem,
+          rightIcon && styles.listItemWithIcon,
           isFirst && styles.isFirst,
           isLast && styles.isLast,
           listItemStyle,
@@ -32,11 +33,7 @@ const ListItem = props => {
           <Text style={styles.title}>{title}</Text>
           {rightTitle && <Text style={styles.rightTitle}>{rightTitle}</Text>}
           {rightIcon && (
-            <MaterialIcons
-              name={rightIcon}
-              size={30}
-              style={styles.rightIcon}
-            />
+            <MaterialIcons name={rightIcon} size={32} style={styles.rightIcon} />
           )}
         </View>
         {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
@@ -49,6 +46,9 @@ const styles = StyleSheet.create({
   listItem: {
     padding: 30,
     backgroundColor: colors.white,
+  },
+  listItemWithIcon: {
+    paddingVertical: 24,
   },
   titleWrapper: {
     flexDirection: 'row',
