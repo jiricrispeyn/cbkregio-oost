@@ -1,7 +1,14 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 import colors from '../../utils/colors';
+import { get } from 'lodash';
 
 class CustomHeader extends PureComponent {
   state = {};
@@ -47,13 +54,27 @@ class CustomHeader extends PureComponent {
     );
   }
 
+  _getLoading(scene) {
+    const isLoading = get(scene, 'route.params.loading');
+
+    if (!isLoading) {
+      return null;
+    }
+
+    return <ActivityIndicator />;
+  }
+
   render() {
     const largeTitle = this._getTitle(this.props.scene);
     const parentTitle = this._getParentTitle(this.props.scene);
+    const loader = this._getLoading(this.props.scene);
 
     return (
       <View style={styles.container}>
-        {this._renderParentTitle(parentTitle)}
+        <View style={styles.parentTitleContainer}>
+          {this._renderParentTitle(parentTitle)}
+          {loader}
+        </View>
         <Text style={styles.largeTitle}>{largeTitle}</Text>
       </View>
     );
@@ -75,6 +96,10 @@ const styles = StyleSheet.create({
     fontSize: 34,
     lineHeight: 41,
     fontWeight: '600',
+  },
+  parentTitleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   parentTitleWrapper: {
     flexDirection: 'row',

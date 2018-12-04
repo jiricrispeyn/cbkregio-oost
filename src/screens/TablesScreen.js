@@ -34,6 +34,14 @@ class TablesScreen extends PureComponent {
     const { navigation, dispatch } = this.props;
     const league = navigation.getParam('league', null);
     dispatch(fetchLeagueDetail(league));
+    navigation.setParams({ loading: this.props.loading });
+  }
+
+  componentDidUpdate(prevProps) {
+    const { navigation, loading } = this.props;
+    if (loading !== prevProps.loading && !this.state.refreshing) {
+      navigation.setParams({ loading });
+    }
   }
 
   _onRefresh = async () => {
