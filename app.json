@@ -13,6 +13,7 @@
     "githubUrl": "https://github.com/jiricrispeyn/cbkregio-oost",
     "orientation": "portrait",
     "primaryColor": "#25ABFB",
-    "icon": "./src/assets/icon.png"
+    "icon": "./assets/icon.png",
+    "splash": "./assets/splash.png"
   }
 }
