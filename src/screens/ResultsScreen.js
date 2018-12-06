@@ -6,6 +6,8 @@ import {
   Text,
   ActivityIndicator,
   RefreshControl,
+  Dimensions,
+  Platform,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { keyBy } from 'lodash';
@@ -24,6 +26,11 @@ import TrendingMatch from '../components/matches/TrendingMatch';
 import Match from '../components/matches/Match';
 import Datepicker from '../components/datepicker/Datepicker';
 import colors from '../utils/colors';
+
+import Carousel from 'react-native-snap-carousel';
+import { Haptic, Constants } from 'expo';
+
+const { width } = Dimensions.get('window');
 
 class ResultsScreen extends PureComponent {
   state = {
@@ -122,6 +129,25 @@ class ResultsScreen extends PureComponent {
     this.setState({ selectedDate });
   }
 
+  _renderTrendingMatch({ item, index }) {
+    return (
+      <TrendingMatch
+        key={index}
+        match={item}
+        cardStyle={styles.trendingCardStyle}
+      />
+    );
+  }
+
+  _onSnapToItem() {
+    if (
+      Platform.OS === 'ios' &&
+      parseInt(Constants.platform.ios.systemVersion) >= 10
+    ) {
+      Haptic.selection();
+    }
+  }
+
   renderTrendingMatches(trendingMatches) {
     if (!trendingMatches) {
       return;
@@ -135,20 +161,19 @@ class ResultsScreen extends PureComponent {
           <Text style={styles.trendingTitle}>Laatste speeldag</Text>
           <Text style={styles.trendingDate}>{date}</Text>
         </View>
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          style={styles.trendingScrollView}
-          contentContainerStyle={styles.trendingContentContainerStyle}
-        >
-          {trendingMatches.matches.map((match, i) => (
-            <TrendingMatch
-              key={i}
-              match={match}
-              cardStyle={styles.trendingCardStyle}
-            />
-          ))}
-        </ScrollView>
+        <Carousel
+          ref={c => {
+            this._carousel = c;
+          }}
+          data={trendingMatches.matches}
+          renderItem={this._renderTrendingMatch}
+          sliderWidth={width}
+          itemWidth={240}
+          useScrollView={true}
+          activeSlideAlignment="start"
+          containerCustomStyle={styles.trendingScrollView}
+          onSnapToItem={this._onSnapToItem}
+        />
       </View>
     );
   }
@@ -267,7 +292,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   trendingCardStyle: {
-    marginRight: 15,
+    marginLeft: 15,
   },
   resultsContainer: {
     marginHorizontal: 15,
