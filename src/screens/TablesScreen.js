@@ -31,10 +31,10 @@ class TablesScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const { navigation, dispatch } = this.props;
+    const { navigation, dispatch, loading } = this.props;
     const league = navigation.getParam('league', null);
     dispatch(fetchLeagueDetail(league));
-    navigation.setParams({ loading: this.props.loading });
+    navigation.setParams({ loading });
   }
 
   componentDidUpdate(prevProps) {
