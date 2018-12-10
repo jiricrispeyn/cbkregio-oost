@@ -39,6 +39,57 @@ class ResultsScreen extends PureComponent {
     selectedDate: null,
   };
 
+  componentDidMount() {
+    const { navigation, dispatch, results, loading } = this.props;
+    const league = navigation.getParam('league', null);
+    dispatch(fetchLeagueDetail(league));
+
+    if (results.length > 0) {
+      navigation.setParams({ loading });
+    }
+
+    this.setResults(results);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { refreshing } = this.state;
+    const { navigation, results, loading } = this.props;
+
+    if (loading !== prevProps.loading && !refreshing && results.length > 0) {
+      navigation.setParams({ loading });
+    }
+
+    if (JSON.stringify(results) !== JSON.stringify(prevProps.results)) {
+      this.setResults(results);
+    }
+  }
+
+  setResults(newResults) {
+    if (newResults.length === 0) {
+      return;
+    }
+
+    const results = newResults.map(result => {
+      const [day, month, year] = result.date.split('-');
+      const _date = new Date(year, month - 1, day);
+
+      return { ...result, _date };
+    });
+
+    this.setState(prevState => {
+      if (prevState.selectedDate) {
+        return { results };
+      }
+
+      const selectedDate = this.getDefaultSelected(results);
+
+      return {
+        results,
+        selectedDate,
+      };
+    });
+  }
+
   getTrendingMatches(results) {
     const now = new Date();
     const dates = results.map(result => result._date);
@@ -48,7 +99,11 @@ class ResultsScreen extends PureComponent {
       isBefore(now, results[closestIndex]._date) &&
       differenceInDays(now, results[closestIndex]._date) < -1;
 
-    return shouldShowPrev ? results[closestIndex - 1] : results[closestIndex];
+    const trendingMatches = shouldShowPrev
+      ? results[closestIndex - 1]
+      : results[closestIndex];
+
+    return trendingMatches;
   }
 
   getDefaultSelected(results) {
@@ -74,53 +129,6 @@ class ResultsScreen extends PureComponent {
     );
   }
 
-  componentDidMount() {
-    const { navigation, dispatch, loading, results } = this.props;
-    const league = navigation.getParam('league', null);
-    dispatch(fetchLeagueDetail(league));
-    this.setResults(results);
-    navigation.setParams({ loading });
-  }
-
-  componentDidUpdate(prevProps) {
-    const { navigation, loading } = this.props;
-    if (loading !== prevProps.loading && !this.state.refreshing) {
-      navigation.setParams({ loading });
-    }
-
-    if (
-      JSON.stringify(this.props.results) !== JSON.stringify(prevProps.results)
-    ) {
-      this.setResults(this.props.results);
-    }
-  }
-
-  setResults(results) {
-    if (results.length === 0) {
-      return;
-    }
-
-    results = results.map(result => {
-      const [day, month, year] = result.date.split('-');
-      const _date = new Date(year, month - 1, day);
-
-      return { ...result, _date };
-    });
-
-    this.setState(prevState => {
-      if (prevState.selectedDate) {
-        return { results };
-      }
-
-      const selectedDate = this.getDefaultSelected(results);
-
-      return {
-        results,
-        selectedDate,
-      };
-    });
-  }
-
   _onRefresh = async () => {
     this.setState({ refreshing: true });
     const { navigation, dispatch } = this.props;
@@ -131,18 +139,8 @@ class ResultsScreen extends PureComponent {
     });
   };
 
-  onPress(selectedDate) {
+  onSelectDate(selectedDate) {
     this.setState({ selectedDate });
-  }
-
-  renderTrendingMatches({ item, index }) {
-    return (
-      <TrendingMatch
-        key={index}
-        match={item}
-        cardStyle={styles.trendingCardStyle}
-      />
-    );
   }
 
   onSnapToItem() {
@@ -172,7 +170,7 @@ class ResultsScreen extends PureComponent {
             this._carousel = c;
           }}
           data={trendingMatches.matches}
-          renderItem={this.renderTrendingMatches}
+          renderItem={this.renderTrendingMatch}
           sliderWidth={width}
           itemWidth={240}
           useScrollView={true}
@@ -181,6 +179,16 @@ class ResultsScreen extends PureComponent {
           onSnapToItem={this.onSnapToItem}
         />
       </View>
+    );
+  }
+
+  renderTrendingMatch({ item, index }) {
+    return (
+      <TrendingMatch
+        key={index}
+        match={item}
+        cardStyle={styles.trendingCardStyle}
+      />
     );
   }
 
@@ -239,7 +247,7 @@ class ResultsScreen extends PureComponent {
           selected={selectedDate}
           disabled={disabledDates}
           style={styles.datepicker}
-          onPress={this.onPress.bind(this)}
+          onPress={this.onSelectDate.bind(this)}
         />
         <ScrollView
           showsVerticalScrollIndicator={false}
