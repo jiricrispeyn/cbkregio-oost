@@ -32,22 +32,34 @@ class PlayersScreen extends PureComponent {
     const {
       navigation,
       dispatch,
+      players,
       playersLoading,
+      eloRanking,
       eloRankingLoading,
     } = this.props;
     const league = navigation.getParam('league', null);
     const loading = playersLoading || eloRankingLoading;
     dispatch(fetchPlayers(league));
     dispatch(fetchEloRanking(league));
-    navigation.setParams({ loading });
+
+    if (players.length > 0 && eloRanking.length > 0) {
+      navigation.setParams({ loading });
+    }
   }
 
   componentDidUpdate(prevProps) {
-    const { navigation, playersLoading, eloRankingLoading } = this.props;
+    const {
+      navigation,
+      players,
+      playersLoading,
+      eloRanking,
+      eloRankingLoading,
+    } = this.props;
 
     if (
-      playersLoading !== prevProps.playersLoading ||
-      eloRankingLoading !== prevProps.eloRankingLoading
+      (playersLoading !== prevProps.playersLoading ||
+        eloRankingLoading !== prevProps.eloRankingLoading) &&
+      (players.length > 0 && eloRanking.length > 0)
     ) {
       const loading = playersLoading || eloRankingLoading;
       navigation.setParams({ loading });
