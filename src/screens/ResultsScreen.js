@@ -75,13 +75,19 @@ class ResultsScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const { navigation, dispatch } = this.props;
+    const { navigation, dispatch, loading, results } = this.props;
     const league = navigation.getParam('league', null);
     dispatch(fetchLeagueDetail(league));
-    this.setResults(this.props.results);
+    this.setResults(results);
+    navigation.setParams({ loading });
   }
 
   componentDidUpdate(prevProps) {
+    const { navigation, loading } = this.props;
+    if (loading !== prevProps.loading && !this.state.refreshing) {
+      navigation.setParams({ loading });
+    }
+
     if (
       JSON.stringify(this.props.results) !== JSON.stringify(prevProps.results)
     ) {
@@ -129,7 +135,7 @@ class ResultsScreen extends PureComponent {
     this.setState({ selectedDate });
   }
 
-  _renderTrendingMatch({ item, index }) {
+  renderTrendingMatches({ item, index }) {
     return (
       <TrendingMatch
         key={index}
@@ -139,7 +145,7 @@ class ResultsScreen extends PureComponent {
     );
   }
 
-  _onSnapToItem() {
+  onSnapToItem() {
     if (
       Platform.OS === 'ios' &&
       parseInt(Constants.platform.ios.systemVersion) >= 10
@@ -166,13 +172,13 @@ class ResultsScreen extends PureComponent {
             this._carousel = c;
           }}
           data={trendingMatches.matches}
-          renderItem={this._renderTrendingMatch}
+          renderItem={this.renderTrendingMatches}
           sliderWidth={width}
           itemWidth={240}
           useScrollView={true}
           activeSlideAlignment="start"
           containerCustomStyle={styles.trendingScrollView}
-          onSnapToItem={this._onSnapToItem}
+          onSnapToItem={this.onSnapToItem}
         />
       </View>
     );
