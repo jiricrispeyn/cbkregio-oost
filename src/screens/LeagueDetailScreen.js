@@ -40,7 +40,7 @@ class LeagueDetailScreen extends PureComponent {
                 rightIcon="chevron-right"
                 isFirst={i === 0}
                 isLast={i === items.length - 1}
-                divider={i === 0 ? false : true}
+                divider={i !== 0}
                 onPress={() => navigation.navigate(item.screen, { league })}
               />
             ))}
