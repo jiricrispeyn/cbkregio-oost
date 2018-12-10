@@ -31,15 +31,19 @@ class TablesScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const { navigation, dispatch, loading } = this.props;
+    const { navigation, dispatch, tables, loading } = this.props;
     const league = navigation.getParam('league', null);
     dispatch(fetchLeagueDetail(league));
-    navigation.setParams({ loading });
+
+    if (tables.length > 0) {
+      navigation.setParams({ loading });
+    }
   }
 
   componentDidUpdate(prevProps) {
-    const { navigation, loading } = this.props;
-    if (loading !== prevProps.loading && !this.state.refreshing) {
+    const { refreshing } = this.state;
+    const { navigation, tables, loading } = this.props;
+    if (loading !== prevProps.loading && !refreshing && tables.length > 0) {
       navigation.setParams({ loading });
     }
   }
