@@ -6,8 +6,6 @@ import {
   Text,
   ActivityIndicator,
   RefreshControl,
-  Dimensions,
-  Platform,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { keyBy } from 'lodash';
@@ -22,15 +20,11 @@ import {
   getActiveLeagueDetailError,
 } from '../selectors';
 import { fetchLeagueDetail } from '../actions/league-detail';
-import TrendingMatch from '../components/matches/TrendingMatch';
 import Match from '../components/matches/Match';
 import Datepicker from '../components/datepicker/Datepicker';
 import colors from '../utils/colors';
 
-import Carousel from 'react-native-snap-carousel';
-import { Haptic, Constants } from 'expo';
-
-const { width } = Dimensions.get('window');
+import TrendingMatches from '../views/TrendingMatches';
 
 class ResultsScreen extends PureComponent {
   state = {
@@ -143,53 +137,14 @@ class ResultsScreen extends PureComponent {
     this.setState({ selectedDate });
   }
 
-  onSnapToItem() {
-    if (
-      Platform.OS === 'ios' &&
-      parseInt(Constants.platform.ios.systemVersion) >= 10
-    ) {
-      Haptic.selection();
-    }
-  }
-
   renderTrendingMatches(trendingMatches) {
     if (!trendingMatches) {
       return;
     }
 
-    const date = format(trendingMatches._date, 'D MMMM YYYY', { locale });
+    const { _date, matches } = trendingMatches;
 
-    return (
-      <View>
-        <View style={styles.trendingHeader}>
-          <Text style={styles.trendingTitle}>Laatste speeldag</Text>
-          <Text style={styles.trendingDate}>{date}</Text>
-        </View>
-        <Carousel
-          ref={c => {
-            this._carousel = c;
-          }}
-          data={trendingMatches.matches}
-          renderItem={this.renderTrendingMatch}
-          sliderWidth={width}
-          itemWidth={240}
-          useScrollView={true}
-          activeSlideAlignment="start"
-          containerCustomStyle={styles.trendingScrollView}
-          onSnapToItem={this.onSnapToItem}
-        />
-      </View>
-    );
-  }
-
-  renderTrendingMatch({ item, index }) {
-    return (
-      <TrendingMatch
-        key={index}
-        match={item}
-        cardStyle={styles.trendingCardStyle}
-      />
-    );
+    return <TrendingMatches date={_date} matches={matches} />;
   }
 
   renderResultsByDate(resultsByDate, selectedDate) {
@@ -281,32 +236,6 @@ const styles = StyleSheet.create({
   },
   contentContainerStyle: {
     paddingBottom: 15,
-  },
-  trendingHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginHorizontal: 15,
-    marginTop: 15,
-  },
-  trendingTitle: {
-    fontSize: 14,
-    color: colors.white,
-    letterSpacing: 0.24,
-  },
-  trendingDate: {
-    fontSize: 10,
-    color: colors.chambray,
-  },
-  trendingScrollView: {
-    paddingTop: 14,
-    paddingBottom: 31,
-  },
-  trendingContentContainerStyle: {
-    paddingLeft: 15,
-  },
-  trendingCardStyle: {
-    marginLeft: 15,
   },
   resultsContainer: {
     marginHorizontal: 15,
