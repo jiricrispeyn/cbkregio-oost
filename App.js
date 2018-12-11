@@ -1,5 +1,12 @@
 import React from 'react';
-import { StyleSheet, YellowBox, SafeAreaView, StatusBar } from 'react-native';
+import {
+  StyleSheet,
+  YellowBox,
+  SafeAreaView,
+  StatusBar,
+  View,
+} from 'react-native';
+import { AppLoading } from 'expo';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import createStackNavigator from './src/services/navigator';
@@ -11,14 +18,22 @@ const { store, persistor } = configureStore();
 const AppNavigator = createStackNavigator;
 
 export default class App extends React.Component {
+  renderBootstrapped() {
+    return (
+      <SafeAreaView style={styles.container}>
+        <StatusBar barStyle="light-content" />
+        <AppNavigator />
+      </SafeAreaView>
+    );
+  }
+
   render() {
     return (
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <SafeAreaView style={styles.container}>
-            <StatusBar barStyle="light-content" />
-            <AppNavigator />
-          </SafeAreaView>
+        <PersistGate persistor={persistor}>
+          {bootstrapped =>
+            bootstrapped ? this.renderBootstrapped() : <AppLoading />
+          }
         </PersistGate>
       </Provider>
     );
