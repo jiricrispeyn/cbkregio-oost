@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import PropTypes from 'prop-types';
+import { StyleSheet, View, Text, ViewPropTypes } from 'react-native';
 import { LinearGradient } from 'expo';
 import { getClubTextStyle, getScoreTextStyle } from '../../utils/match';
 import colors, { lightGrayGradient } from '../../utils/colors';
@@ -62,6 +63,11 @@ const TrendingMatch = props => {
       </View>
     </View>
   );
+};
+
+TrendingMatch.propTypes = {
+  match: PropTypes.object.isRequired,
+  cardStyle: ViewPropTypes.style,
 };
 
 const styles = StyleSheet.create({
