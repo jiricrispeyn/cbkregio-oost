@@ -90,7 +90,7 @@ class AddressesScreen extends PureComponent {
     if (loading && addresses.length === 0) {
       return (
         <View style={[styles.screen, { justifyContent: 'center' }]}>
-          <ActivityIndicator />
+          <ActivityIndicator color={colors.white} />
         </View>
       );
     }

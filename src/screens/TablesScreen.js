@@ -14,6 +14,7 @@ import {
 } from '../selectors';
 import { fetchLeagueDetail } from '../actions/league-detail';
 import Table from '../components/table/Table';
+import colors from '../utils/colors';
 
 const tableHead = ['#', 'Club', 'W', 'D', 'L', 'Pt'];
 
@@ -64,7 +65,7 @@ class TablesScreen extends PureComponent {
     if (loading && !refreshing && tables.length === 0) {
       return (
         <View style={[styles.screen, { justifyContent: 'center' }]}>
-          <ActivityIndicator />
+          <ActivityIndicator color={colors.white} />
         </View>
       );
     }

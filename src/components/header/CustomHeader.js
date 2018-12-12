@@ -61,7 +61,7 @@ class CustomHeader extends PureComponent {
       return null;
     }
 
-    return <ActivityIndicator />;
+    return <ActivityIndicator color={colors.white} />;
   }
 
   render() {

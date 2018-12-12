@@ -111,7 +111,7 @@ export default class Players extends PureComponent {
     if (this.props.data.length === 0) {
       return (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator />
+          <ActivityIndicator color={colors.osloGray} />
         </View>
       );
     }

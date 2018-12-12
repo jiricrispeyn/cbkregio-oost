@@ -186,7 +186,7 @@ class ResultsScreen extends PureComponent {
     if (loading && !refreshing && results.length === 0) {
       return (
         <View style={[styles.screen, { justifyContent: 'center' }]}>
-          <ActivityIndicator />
+          <ActivityIndicator color={colors.white} />
         </View>
       );
     }

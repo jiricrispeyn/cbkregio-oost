@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ListItem from '../components/list/ListItem';
 import { fetchLeagues } from '../actions/leagues';
 import { setLeague } from '../actions/nav';
+import colors from '../utils/colors';
 
 class LeaguesScreen extends PureComponent {
   onPress(league) {
@@ -18,10 +19,10 @@ class LeaguesScreen extends PureComponent {
 
   render() {
     const { leagues, loading } = this.props;
-    if (loading) {
+    if (loading && leagues.length === 0) {
       return (
         <View style={[styles.screen, { justifyContent: 'center' }]}>
-          <ActivityIndicator />
+          <ActivityIndicator color={colors.white} />
         </View>
       );
     }
