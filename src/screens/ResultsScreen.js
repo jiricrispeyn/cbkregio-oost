@@ -86,16 +86,17 @@ class ResultsScreen extends PureComponent {
 
   getTrendingMatches(results) {
     const now = new Date();
-    const dates = results.map(result => result._date);
+    const leagueResults = results.filter(({ type }) => type === 'league');
+    const dates = leagueResults.map(result => result._date);
     const closestIndex = closestIndexTo(now, dates);
     const shouldShowPrev =
       closestIndex > 0 &&
-      isBefore(now, results[closestIndex]._date) &&
-      differenceInDays(now, results[closestIndex]._date) < -1;
+      isBefore(now, leagueResults[closestIndex]._date) &&
+      differenceInDays(now, leagueResults[closestIndex]._date) < -1;
 
     const trendingMatches = shouldShowPrev
-      ? results[closestIndex - 1]
-      : results[closestIndex];
+      ? leagueResults[closestIndex - 1]
+      : leagueResults[closestIndex];
 
     return trendingMatches;
   }
