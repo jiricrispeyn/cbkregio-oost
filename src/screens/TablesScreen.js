@@ -16,7 +16,7 @@ import { fetchLeagueDetail } from '../actions/league-detail';
 import Table from '../components/table/Table';
 import colors from '../utils/colors';
 
-const tableHead = ['#', 'Club', 'W', 'D', 'L', 'Pt'];
+const tableHead = ['#', 'Club', 'G', 'W', 'D', 'L', 'Pt'];
 
 class TablesScreen extends PureComponent {
   state = {
@@ -25,9 +25,9 @@ class TablesScreen extends PureComponent {
 
   getTableData(tables) {
     return tables.map(row => {
-      const { position, club, won, drawn, lost, points } = row;
+      const { position, club, played, won, drawn, lost, points } = row;
 
-      return [position, club, won, drawn, lost, points];
+      return [position, club, played, won, drawn, lost, points];
     });
   }
 

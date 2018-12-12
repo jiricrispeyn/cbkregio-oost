@@ -8,6 +8,7 @@ function getCellStyle(head, pos, suffix) {
       return styles[`positionCell${suffix}`];
     case 'Club':
       return styles[`clubCell${suffix}`];
+    case 'G':
     case 'W':
     case 'L':
     case 'D':
