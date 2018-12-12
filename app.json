@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "CBK Regio Oost",
+    "name": "CBK Limburg",
     "description": "Confederale Belgische Kickerbond Limburg",
     "slug": "cbkregio-oost",
     "privacy": "unlisted",
@@ -17,6 +17,13 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover"
+    },
+    "ios": {
+      "bundleIdentifier": "com.jiricrispeyn.cbkregiooost",
+      "buildNumber": "1"
+    },
+    "android": {
+      "package": "com.jiricrispeyn.cbkregiooost"
     }
   }
 }
