@@ -38,8 +38,8 @@ export default function leagueDetailReducer(state = initialState, action) {
         [league]: {
           loading: false,
           error: action.payload.error,
-          results: [],
-          tables: [],
+          // results: [],
+          // tables: [],
         },
       };
     }

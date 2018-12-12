@@ -35,7 +35,7 @@ export default function eloRankingReducer(state = initialState, action) {
         [league]: {
           loading: false,
           error: action.payload.error,
-          data: [],
+          // data: [],
         },
       };
     }

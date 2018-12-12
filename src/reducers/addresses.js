@@ -35,7 +35,7 @@ export default function addressesReducer(state = initialState, action) {
         [league]: {
           loading: false,
           error: action.payload.error,
-          data: [],
+          // data: [],
         },
       };
     }

@@ -29,7 +29,7 @@ export default function leaguesReducer(state = initialState, action) {
         ...state,
         loading: false,
         error: action.payload.error,
-        data: [],
+        // data: [],
       };
     }
     default:
