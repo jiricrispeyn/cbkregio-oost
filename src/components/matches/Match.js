@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   isFirst: {
+    borderTopWidth: 0,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
   },
