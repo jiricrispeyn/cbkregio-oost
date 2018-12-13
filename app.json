@@ -23,7 +23,8 @@
       "buildNumber": "1"
     },
     "android": {
-      "package": "com.jiricrispeyn.cbkregiooost"
+      "package": "com.jiricrispeyn.cbkregiooost",
+      "versionCode": 1
     }
   }
 }
