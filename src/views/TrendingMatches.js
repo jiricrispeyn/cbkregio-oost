@@ -102,8 +102,7 @@ const styles = StyleSheet.create({
   scrollView: {
     paddingTop: 14,
     paddingBottom: 31,
+    paddingLeft: 15,
   },
-  cardStyle: {
-    marginLeft: 15,
-  },
+  cardStyle: {},
 });
