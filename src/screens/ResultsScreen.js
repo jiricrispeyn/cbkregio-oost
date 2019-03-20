@@ -227,7 +227,7 @@ class ResultsScreen extends PureComponent {
             />
           }
         >
-          {this.renderTrendingMatches(trendingMatches)}
+          {/* {this.renderTrendingMatches(trendingMatches)} */}
           {this.renderResultsByDate(resultsByDate, selectedDate)}
         </ScrollView>
       </View>
