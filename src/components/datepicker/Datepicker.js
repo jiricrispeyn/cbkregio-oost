@@ -5,14 +5,29 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import format from 'date-fns/format';
 import locale from 'date-fns/locale/nl';
 import colors, { blueGradient } from '../../utils/colors';
 
+const { width } = Dimensions.get('window');
+
 class Datepicker extends PureComponent {
   state = {};
+
+  scrollToSelected(layout) {
+    const { x, y } = layout;
+    const x1 = x - width / 2;
+    const x2 = x1 > 0 ? x1 : 0;
+
+    this.scroll.scrollTo({
+      x: x2,
+      y,
+      animated: false,
+    });
+  }
 
   renderDate(date, i) {
     const { onPress, selected, disabled } = this.props;
@@ -23,7 +38,11 @@ class Datepicker extends PureComponent {
 
     if (date === selected) {
       return (
-        <View style={containerStyle} key={i}>
+        <View
+          style={containerStyle}
+          key={i}
+          onLayout={event => this.scrollToSelected(event.nativeEvent.layout)}
+        >
           {this.renderSelected(day, month)}
         </View>
       );
@@ -73,6 +92,7 @@ class Datepicker extends PureComponent {
         showsHorizontalScrollIndicator={false}
         style={[styles.scrollView, style]}
         contentContainerStyle={styles.contentContainerStyle}
+        ref={ref => (this.scroll = ref)}
       >
         {dates.map((date, i) => this.renderDate(date, i))}
       </ScrollView>
