@@ -102,9 +102,20 @@ class ResultsScreen extends PureComponent {
   }
 
   getDefaultSelected(results) {
-    const { _date } = results.find(result => result.matches);
+    const now = new Date();
+    let i = 0;
 
-    return _date;
+    const selected = results.reduce((acc, curr) => {
+      const { type, _date } = curr;
+
+      if (type !== 'league' || _date > now || _date < acc) {
+        return acc;
+      }
+
+      return _date;
+    }, new Date(0));
+
+    return selected;
   }
 
   getDates(results) {
