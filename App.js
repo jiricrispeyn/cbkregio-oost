@@ -10,19 +10,21 @@ import { AppLoading } from 'expo';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import createStackNavigator from './src/services/navigator';
+import { createAppContainer } from 'react-navigation';
 import configureStore from './src/store';
 import colors from './src/utils/colors';
 
 YellowBox.ignoreWarnings(['Remote debugger']);
 const { store, persistor } = configureStore();
-const AppNavigator = createStackNavigator;
+const MainNavigator = createStackNavigator;
+const AppContainer = createAppContainer(MainNavigator);
 
 export default class App extends React.Component {
   renderBootstrapped() {
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <AppNavigator />
+        <AppContainer />
       </SafeAreaView>
     );
   }
