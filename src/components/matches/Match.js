@@ -1,14 +1,20 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { getClubTextStyle, getScoreTextStyle } from '../../utils/match';
 import colors from '../../utils/colors';
 
 const Match = props => {
-  const { match, position, isFirst, isLast } = props;
+  const { match, position, isFirst, isLast, onPress } = props;
   const isEven = position % 2 === 0;
+  const Component = match.scoresheet_id ? TouchableOpacity : View;
+  const touchableProps = {
+    activeOpacity: 0.8,
+    onPress: onPress,
+  };
 
   return (
-    <View
+    <Component
+      {...(match.scoresheet_id ? { ...touchableProps } : {})}
       style={[
         styles.container,
         isFirst && styles.isFirst,
@@ -45,7 +51,7 @@ const Match = props => {
           </Text>
         </View>
       </View>
-    </View>
+    </Component>
   );
 };
 
