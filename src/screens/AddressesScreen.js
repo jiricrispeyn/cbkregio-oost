@@ -23,6 +23,7 @@ import colors from '../utils/colors';
 class AddressesScreen extends PureComponent {
   state = {
     rowID: null,
+    scrollEnabled: true,
   };
 
   componentDidMount() {
@@ -101,6 +102,7 @@ class AddressesScreen extends PureComponent {
           style={styles.scrollView}
           contentContainerStyle={styles.contentContainerStyle}
           showsVerticalScrollIndicator={false}
+          scrollEnabled={this.state.scrollEnabled}
         >
           {addresses
             .filter(address => address.club !== 'BYE - VRIJ')
@@ -120,6 +122,7 @@ class AddressesScreen extends PureComponent {
                   onOpen={(sectionID, rowID) => {
                     this.setState({ rowID });
                   }}
+                  scroll={scrollEnabled => this.setState({ scrollEnabled })}
                 >
                   <ListItem
                     title={address.club}
