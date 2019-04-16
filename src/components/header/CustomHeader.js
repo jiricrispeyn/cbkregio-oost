@@ -75,7 +75,9 @@ class CustomHeader extends PureComponent {
           {this._renderParentTitle(parentTitle)}
           {loader}
         </View>
-        <Text style={styles.largeTitle}>{largeTitle}</Text>
+        <Text style={[styles.largeTitle, this.props.titleStyle]}>
+          {largeTitle}
+        </Text>
       </View>
     );
   }
