@@ -160,6 +160,8 @@ class ResultsScreen extends PureComponent {
   }
 
   renderResultsByDate(resultsByDate, selectedDate) {
+    const { navigation } = this.props;
+
     if (!resultsByDate || !selectedDate) {
       return;
     }
@@ -184,6 +186,13 @@ class ResultsScreen extends PureComponent {
               position={i}
               isFirst={i === 0}
               isLast={i === matches.length - 1}
+              onPress={() =>
+                navigation.navigate('Result', {
+                  id: match.scoresheet_id,
+                  home: match.home.club,
+                  away: match.away.club,
+                })
+              }
             />
           ))}
         </View>
@@ -204,7 +213,6 @@ class ResultsScreen extends PureComponent {
     }
 
     const resultsByDate = keyBy(results, 'date');
-    const trendingMatches = this.getTrendingMatches(results);
     const { dates, disabledDates } = this.getDates(results);
 
     return (
@@ -227,7 +235,6 @@ class ResultsScreen extends PureComponent {
             />
           }
         >
-          {/* {this.renderTrendingMatches(trendingMatches)} */}
           {this.renderResultsByDate(resultsByDate, selectedDate)}
         </ScrollView>
       </View>
