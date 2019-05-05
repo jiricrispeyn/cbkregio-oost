@@ -30,6 +30,12 @@ export const fetchAddresses = async id => {
     .catch(err => console.log(err));
 };
 
+export const fetchScoresheet = async (leagueId, scoresheetId) => {
+  return fetch(`${API_URL}/leagues/${leagueId}/scoresheet/${scoresheetId}`)
+    .then(res => res.json())
+    .catch(err => console.log(err));
+};
+
 function handleErrors(response) {
   if (!response.ok) {
     throw Error(response.statusText);
