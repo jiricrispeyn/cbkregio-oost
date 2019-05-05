@@ -43,8 +43,8 @@ export default createStackNavigator(
     Result: {
       screen: ResultScreen,
       navigationOptions: ({ navigation }) => {
-        console.log({ navigation });
         const { home, away } = navigation.state.params;
+
         return {
           title: `${home} - ${away}`,
           header: props => (
