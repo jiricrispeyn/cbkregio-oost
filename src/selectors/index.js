@@ -6,6 +6,7 @@ const addressesSelector = state => state.addresses;
 const leagueDetailSelector = state => state.leagueDetail;
 const playersSelector = state => state.players;
 const eloRankingSelector = state => state.eloRanking;
+export const scoresheetsSelector = state => state.scoresheets;
 
 export const getActiveAddresses = createSelector(
   addressesSelector,
