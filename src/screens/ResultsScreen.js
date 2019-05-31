@@ -161,6 +161,7 @@ class ResultsScreen extends PureComponent {
 
   renderResultsByDate(resultsByDate, selectedDate) {
     const { navigation } = this.props;
+    const league = navigation.getParam('league', null);
 
     if (!resultsByDate || !selectedDate) {
       return;
@@ -187,7 +188,8 @@ class ResultsScreen extends PureComponent {
               isFirst={i === 0}
               isLast={i === matches.length - 1}
               onPress={() =>
-                navigation.navigate('Result', {
+                navigation.navigate('Scoresheet', {
+                  league,
                   id: match.scoresheet_id,
                   home: match.home.club,
                   away: match.away.club,
