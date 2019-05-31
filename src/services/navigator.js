@@ -5,7 +5,7 @@ import LeaguesScreen from '../screens/LeaguesScreen';
 import LeagueDetailScreen from '../screens/LeagueDetailScreen';
 import TablesScreen from '../screens/TablesScreen';
 import ResultsScreen from '../screens/ResultsScreen';
-import ResultScreen from '../screens/ResultScreen';
+import ScoresheetScreen from '../screens/ScoresheetScreen';
 import PlayersScreen from '../screens/PlayersScreen';
 import AddressesScreen from '../screens/AddressesScreen';
 import colors from '../utils/colors';
@@ -40,8 +40,8 @@ export default createStackNavigator(
         header: props => <CustomHeader {...props} />,
       }),
     },
-    Result: {
-      screen: ResultScreen,
+    Scoresheet: {
+      screen: ScoresheetScreen,
       navigationOptions: ({ navigation }) => {
         const { home, away } = navigation.state.params;
 
