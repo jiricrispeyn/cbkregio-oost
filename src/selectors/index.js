@@ -1,12 +1,22 @@
 import { createSelector } from 'reselect';
 import { get } from 'lodash';
 
-const activeLeagueSelector = state => state.nav;
+const navSelector = state => state.nav;
 const addressesSelector = state => state.addresses;
 const leagueDetailSelector = state => state.leagueDetail;
 const playersSelector = state => state.players;
 const eloRankingSelector = state => state.eloRanking;
-export const scoresheetsSelector = state => state.scoresheets;
+const scoresheetsSelector = state => state.scoresheets;
+
+const activeLeagueSelector = createSelector(
+  navSelector,
+  nav => nav.league
+);
+
+const activeScoresheetSelector = createSelector(
+  navSelector,
+  nav => nav.scoresheet
+);
 
 export const getActiveAddresses = createSelector(
   addressesSelector,
@@ -86,4 +96,25 @@ export const getActiveEloRankingError = createSelector(
   eloRankingSelector,
   activeLeagueSelector,
   (players, activeLeague) => get(players, `${activeLeague}.error`)
+);
+
+export const getActiveScoresheet = createSelector(
+  scoresheetsSelector,
+  activeScoresheetSelector,
+  (scoresheets, activeScoresheet) =>
+    get(scoresheets, `${activeScoresheet}.data`) || []
+);
+
+export const isActiveScoresheetLoading = createSelector(
+  scoresheetsSelector,
+  activeScoresheetSelector,
+  (scoresheets, activeScoresheet) =>
+    get(scoresheets, `${activeScoresheet}.loading`)
+);
+
+export const getActiveScoresheetError = createSelector(
+  scoresheetsSelector,
+  activeScoresheetSelector,
+  (scoresheets, activeScoresheet) =>
+    get(scoresheets, `${activeScoresheet}.error`)
 );
