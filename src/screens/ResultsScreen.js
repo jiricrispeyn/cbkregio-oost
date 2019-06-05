@@ -25,6 +25,7 @@ import Datepicker from '../components/datepicker/Datepicker';
 import colors from '../utils/colors';
 
 import TrendingMatches from '../views/TrendingMatches';
+import { setScoresheet } from '../actions/nav';
 
 class ResultsScreen extends PureComponent {
   state = {
@@ -160,7 +161,7 @@ class ResultsScreen extends PureComponent {
   }
 
   renderResultsByDate(resultsByDate, selectedDate) {
-    const { navigation } = this.props;
+    const { navigation, dispatch } = this.props;
     const league = navigation.getParam('league', null);
 
     if (!resultsByDate || !selectedDate) {
@@ -187,14 +188,15 @@ class ResultsScreen extends PureComponent {
               position={i}
               isFirst={i === 0}
               isLast={i === matches.length - 1}
-              onPress={() =>
+              onPress={() => {
+                dispatch(setScoresheet(match.scoresheet_id));
                 navigation.navigate('Scoresheet', {
                   league,
                   id: match.scoresheet_id,
                   home: match.home.club,
                   away: match.away.club,
-                })
-              }
+                });
+              }}
             />
           ))}
         </View>
