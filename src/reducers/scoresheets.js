@@ -17,11 +17,10 @@ export default function scoresheetReducer(state = initialState, action) {
           ...scoresheetState,
           loading: true,
           error: null,
-          data: scoresheetState.data || [],
+          data: scoresheetState.data || {},
         },
       };
     case FETCH_SCORESHEET_SUCCESS:
-      console.log(action);
       return {
         ...state,
         [action.payload.id]: {
