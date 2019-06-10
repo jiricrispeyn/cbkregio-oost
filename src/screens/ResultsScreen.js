@@ -193,8 +193,6 @@ class ResultsScreen extends PureComponent {
                 navigation.navigate('Scoresheet', {
                   league,
                   id: match.scoresheet_id,
-                  home: match.home.club,
-                  away: match.away.club,
                 });
               }}
             />
