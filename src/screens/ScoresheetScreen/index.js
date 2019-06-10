@@ -12,10 +12,23 @@ import {
   StyledResultContainer,
   StyledResultItem,
   StyledResultItemText,
+  StyledResultDivider,
 } from './style';
-import { ScrollView } from 'react-native-gesture-handler';
+import Tabs from '../../components/tabs/Tabs';
+
+const tabs = ['Tab 1', 'Tab 2'];
 
 class ScoresheetScreen extends PureComponent {
+  state = {
+    selectedIndex: 0,
+  };
+
+  onPress(selectedIndex) {
+    this.setState({
+      selectedIndex,
+    });
+  }
+
   componentDidMount() {
     const { navigation, dispatch } = this.props;
     const scoresheetId = navigation.getParam('id', null);
@@ -44,6 +57,7 @@ class ScoresheetScreen extends PureComponent {
     console.log(this.props);
 
     const { scoresheet } = this.props;
+    const { selectedIndex } = this.state;
 
     if (isEmpty(scoresheet)) {
       <View>
@@ -71,7 +85,24 @@ class ScoresheetScreen extends PureComponent {
             </StyledResultItemText>
           </StyledResultItem>
         </StyledResultContainer>
-      </ScrollView>
+
+        <Tabs
+          tabs={tabs}
+          selectedIndex={selectedIndex}
+          onPress={this.onPress.bind(this)}
+          style={{ marginTop: 30 }}
+        />
+        {selectedIndex === 0 && (
+          <View>
+            <Text>{tabs[0]}</Text>
+          </View>
+        )}
+        {selectedIndex === 1 && (
+          <View>
+            <Text>{tabs[1]}</Text>
+          </View>
+        )}
+      </View>
     );
   }
 }
