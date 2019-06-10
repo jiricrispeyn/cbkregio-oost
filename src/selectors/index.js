@@ -102,7 +102,7 @@ export const getActiveScoresheet = createSelector(
   scoresheetsSelector,
   activeScoresheetSelector,
   (scoresheets, activeScoresheet) =>
-    get(scoresheets, `${activeScoresheet}.data`) || []
+    get(scoresheets, `${activeScoresheet}.data`, {})
 );
 
 export const isActiveScoresheetLoading = createSelector(
