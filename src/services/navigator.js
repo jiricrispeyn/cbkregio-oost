@@ -43,16 +43,9 @@ export default createStackNavigator(
     Scoresheet: {
       screen: ScoresheetScreen,
       navigationOptions: ({ navigation }) => {
-        const { home, away } = navigation.state.params;
-
         return {
-          title: `${home} - ${away}`,
-          header: props => (
-            <CustomHeader
-              {...props}
-              titleStyle={{ fontSize: 18, lineHeight: 21 }}
-            />
-          ),
+          title: 'Wedstrijdblad',
+          header: props => <CustomHeader {...props} />,
         };
       },
     },
