@@ -5,16 +5,11 @@ import { isEmpty, get } from 'lodash';
 import { fetchScoresheet } from '../../actions/scoresheet';
 import {
   getActiveScoresheet,
-  isActiveAddressesLoading,
-  getActiveAddressesError,
+  isActiveScoresheetLoading,
+  getActiveScoresheetError,
 } from '../../selectors';
-import {
-  StyledResultContainer,
-  StyledResultItem,
-  StyledResultItemText,
-  StyledResultDivider,
-} from './style';
 import Tabs from '../../components/tabs/Tabs';
+import Result from '../../components/result';
 
 const tabs = ['Tab 1', 'Tab 2'];
 
@@ -30,34 +25,28 @@ class ScoresheetScreen extends PureComponent {
   }
 
   componentDidMount() {
-    const { navigation, dispatch } = this.props;
+    const { navigation, scoresheet, dispatch, loading } = this.props;
     const scoresheetId = navigation.getParam('id', null);
     const leagueId = navigation.getParam('league', null);
 
     dispatch(fetchScoresheet(leagueId, scoresheetId));
 
-    // if (results.length > 0) {
-    //   navigation.setParams({ loading });
-    // }
-    // this.setResults(results);
+    if (!isEmpty(scoresheet)) {
+      navigation.setParams({ loading });
+    }
   }
 
   componentDidUpdate(prevProps) {
-    // const { refreshing } = this.state;
-    // const { navigation, results, loading } = this.props;
-    // if (loading !== prevProps.loading && !refreshing && results.length > 0) {
-    //   navigation.setParams({ loading });
-    // }
-    // if (JSON.stringify(results) !== JSON.stringify(prevProps.results)) {
-    //   this.setResults(results);
-    // }
+    const { navigation, scoresheet, loading } = this.props;
+
+    if (loading !== prevProps.loading && !isEmpty(scoresheet)) {
+      navigation.setParams({ loading });
+    }
   }
 
   render() {
     const { scoresheet } = this.props;
     const { selectedIndex } = this.state;
-
-    console.log({ scoresheet });
 
     if (isEmpty(scoresheet)) {
       <View>
@@ -70,21 +59,11 @@ class ScoresheetScreen extends PureComponent {
 
     return (
       <View>
-        <StyledResultContainer>
-          <StyledResultItem isFirst={true} winner={homeScore >= 9}>
-            <StyledResultItemText winner={homeScore >= 9}>
-              {homeScore}
-            </StyledResultItemText>
-          </StyledResultItem>
-
-          <StyledResultDivider />
-
-          <StyledResultItem isLast={true} winner={awayScore >= 9}>
-            <StyledResultItemText winner={awayScore >= 9}>
-              {awayScore}
-            </StyledResultItemText>
-          </StyledResultItem>
-        </StyledResultContainer>
+        <Result
+          home={homeScore}
+          away={awayScore}
+          style={{ alignSelf: 'center' }}
+        />
 
         <View style={{ marginTop: 30, marginHorizontal: 16 }}>
           <Tabs
@@ -110,8 +89,8 @@ class ScoresheetScreen extends PureComponent {
 
 const mapStateToProps = state => ({
   scoresheet: getActiveScoresheet(state),
-  loading: isActiveAddressesLoading(state),
-  error: getActiveAddressesError(state),
+  loading: isActiveScoresheetLoading(state),
+  error: getActiveScoresheetError(state),
 });
 
 export default connect(mapStateToProps)(ScoresheetScreen);
