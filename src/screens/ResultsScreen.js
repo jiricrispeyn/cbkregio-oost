@@ -24,7 +24,6 @@ import Match from '../components/matches/Match';
 import Datepicker from '../components/datepicker/Datepicker';
 import colors from '../utils/colors';
 
-import TrendingMatches from '../views/TrendingMatches';
 import { setScoresheet } from '../actions/nav';
 
 class ResultsScreen extends PureComponent {
@@ -85,23 +84,6 @@ class ResultsScreen extends PureComponent {
     });
   }
 
-  getTrendingMatches(results) {
-    const now = new Date();
-    const leagueResults = results.filter(({ type }) => type === 'league');
-    const dates = leagueResults.map(result => result._date);
-    const closestIndex = closestIndexTo(now, dates);
-    const shouldShowPrev =
-      closestIndex > 0 &&
-      isBefore(now, leagueResults[closestIndex]._date) &&
-      differenceInDays(now, leagueResults[closestIndex]._date) < -1;
-
-    const trendingMatches = shouldShowPrev
-      ? leagueResults[closestIndex - 1]
-      : leagueResults[closestIndex];
-
-    return trendingMatches;
-  }
-
   getDefaultSelected(results) {
     const now = new Date();
     let i = 0;
@@ -148,16 +130,6 @@ class ResultsScreen extends PureComponent {
 
   onSelectDate(selectedDate) {
     this.setState({ selectedDate });
-  }
-
-  renderTrendingMatches(trendingMatches) {
-    if (!trendingMatches) {
-      return;
-    }
-
-    const { _date, matches } = trendingMatches;
-
-    return <TrendingMatches date={_date} matches={matches} />;
   }
 
   renderResultsByDate(resultsByDate, selectedDate) {
