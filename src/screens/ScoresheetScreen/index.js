@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Text, View, ActivityIndicator } from 'react-native';
+import { Text, View, ActivityIndicator, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { isEmpty, get } from 'lodash';
 import { fetchScoresheet } from '../../actions/scoresheet';
@@ -55,13 +55,15 @@ class ScoresheetScreen extends PureComponent {
     const awayScore = get(scoresheet, 'clubs.away.score');
 
     return (
-      <ScrollView>
+      <View>
         <StyledResultContainer>
           <StyledResultItem isFirst={true} winner={homeScore >= 9}>
             <StyledResultItemText winner={homeScore >= 9}>
               {homeScore}
             </StyledResultItemText>
           </StyledResultItem>
+
+          <StyledResultDivider />
 
           <StyledResultItem isLast={true} winner={awayScore >= 9}>
             <StyledResultItemText winner={awayScore >= 9}>

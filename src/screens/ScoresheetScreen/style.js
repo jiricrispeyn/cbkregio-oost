@@ -3,6 +3,7 @@ import colors from '../../utils/colors';
 
 export const StyledResultContainer = styled.View`
   flex-direction: row;
+  align-self: center;
 `;
 
 export const StyledResultItem = styled.View`
@@ -15,8 +16,6 @@ export const StyledResultItem = styled.View`
   border-top-right-radius: ${props => (props.isLast ? '5px' : 0)};
   border-bottom-left-radius: ${props => (props.isFirst ? '5px' : 0)};
   border-bottom-right-radius: ${props => (props.isLast ? '5px' : 0)};
-  border-left: ${props =>
-    props.isFirst ? 'none' : `1px solid ${colors.mystic}`};
 `;
 
 export const StyledResultItemText = styled.Text`
@@ -24,4 +23,10 @@ export const StyledResultItemText = styled.Text`
   font-weight: bold;
   letter-spacing: 0.3px;
   color: ${props => (props.winner ? colors.malachite : colors.milanoRed)};
+`;
+
+export const StyledResultDivider = styled.View`
+  height: 100%;
+  width: 1px;
+  background-color: ${colors.mystic};
 `;
