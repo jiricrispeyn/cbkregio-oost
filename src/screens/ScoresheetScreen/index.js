@@ -54,10 +54,10 @@ class ScoresheetScreen extends PureComponent {
   }
 
   render() {
-    console.log(this.props);
-
     const { scoresheet } = this.props;
     const { selectedIndex } = this.state;
+
+    console.log({ scoresheet });
 
     if (isEmpty(scoresheet)) {
       <View>
@@ -86,22 +86,23 @@ class ScoresheetScreen extends PureComponent {
           </StyledResultItem>
         </StyledResultContainer>
 
-        <Tabs
-          tabs={tabs}
-          selectedIndex={selectedIndex}
-          onPress={this.onPress.bind(this)}
-          style={{ marginTop: 30 }}
-        />
-        {selectedIndex === 0 && (
-          <View>
-            <Text>{tabs[0]}</Text>
-          </View>
-        )}
-        {selectedIndex === 1 && (
-          <View>
-            <Text>{tabs[1]}</Text>
-          </View>
-        )}
+        <View style={{ marginTop: 30, marginHorizontal: 16 }}>
+          <Tabs
+            tabs={tabs}
+            selectedIndex={selectedIndex}
+            onPress={this.onPress.bind(this)}
+          />
+          {selectedIndex === 0 && (
+            <View>
+              <Text>{tabs[0]}</Text>
+            </View>
+          )}
+          {selectedIndex === 1 && (
+            <View>
+              <Text>{tabs[1]}</Text>
+            </View>
+          )}
+        </View>
       </View>
     );
   }
