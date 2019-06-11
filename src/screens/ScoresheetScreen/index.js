@@ -56,6 +56,8 @@ class ScoresheetScreen extends PureComponent {
 
     const homeScore = get(scoresheet, 'clubs.home.score');
     const awayScore = get(scoresheet, 'clubs.away.score');
+    const homeName = navigation.getParam('home');
+    const awayName = navigation.getParam('away');
 
     return (
       <View>
@@ -64,6 +66,11 @@ class ScoresheetScreen extends PureComponent {
           away={awayScore}
           style={{ alignSelf: 'center' }}
         />
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text>{homeName}</Text>
+          <Text>{awayName}</Text>
+        </View>
 
         <View style={{ marginTop: 30, marginHorizontal: 16 }}>
           <Tabs
