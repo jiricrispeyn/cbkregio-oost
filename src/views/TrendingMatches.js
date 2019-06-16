@@ -9,7 +9,8 @@ import {
   Animated,
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import { Haptic, Constants } from 'expo';
+import * as Haptics from 'expo-haptics';
+import Constants from 'expo-constants';
 import format from 'date-fns/format';
 import locale from 'date-fns/locale/nl';
 import colors from '../utils/colors';
