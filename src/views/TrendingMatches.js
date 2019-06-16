@@ -40,7 +40,7 @@ export default class TrendingMatches extends PureComponent {
       Platform.OS === 'ios' &&
       parseInt(Constants.platform.ios.systemVersion) >= 10
     ) {
-      Haptic.selection();
+      Haptics.selectionAsync();
     }
   }
 
