@@ -4,7 +4,7 @@
     "description": "Confederale Belgische Kickerbond Limburg",
     "slug": "cbkregio-oost",
     "privacy": "unlisted",
-    "sdkVersion": "32.0.0",
+    "sdkVersion": "33.0.0",
     "version": "1.0.2",
     "platforms": [
       "ios",
