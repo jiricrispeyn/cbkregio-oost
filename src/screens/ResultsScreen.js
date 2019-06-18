@@ -43,6 +43,15 @@ class ResultsScreen extends PureComponent {
     }
 
     this.setResults(results);
+
+    const id = '224410';
+    dispatch(setScoresheet(id));
+    navigation.navigate('Scoresheet', {
+      league,
+      id,
+      home: 'GALACTICOS',
+      away: 'EMMABOYS',
+    });
   }
 
   componentDidUpdate(prevProps) {
