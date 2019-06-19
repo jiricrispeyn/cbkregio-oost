@@ -45,7 +45,7 @@ class ScoresheetScreen extends PureComponent {
   }
 
   render() {
-    const { scoresheet } = this.props;
+    const { scoresheet, navigation } = this.props;
     const { selectedIndex } = this.state;
 
     if (isEmpty(scoresheet)) {
