@@ -36,6 +36,19 @@ class ResultsScreen extends PureComponent {
   componentDidMount() {
     const { navigation, dispatch, results, loading } = this.props;
     const league = navigation.getParam('league', null);
+    const id = '224410';
+    const home = 'GALACTICOS';
+    const away = 'EMMABOYS';
+
+    dispatch(setScoresheet(id));
+    navigation.navigate('Scoresheet', {
+      league,
+      id,
+      home,
+      away,
+    });
+    return;
+
     dispatch(fetchLeagueDetail(league));
 
     if (results.length > 0) {
@@ -43,15 +56,6 @@ class ResultsScreen extends PureComponent {
     }
 
     this.setResults(results);
-
-    const id = '224410';
-    dispatch(setScoresheet(id));
-    navigation.navigate('Scoresheet', {
-      league,
-      id,
-      home: 'GALACTICOS',
-      away: 'EMMABOYS',
-    });
   }
 
   componentDidUpdate(prevProps) {
