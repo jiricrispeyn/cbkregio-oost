@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { View, ActivityIndicator, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { isEmpty, get } from 'lodash';
+import { isEmpty, get, flatten } from 'lodash';
 import { fetchScoresheet } from '../../actions/scoresheet';
 import {
   getActiveScoresheet,
@@ -11,8 +11,9 @@ import {
 import Tabs from '../../components/tabs/Tabs';
 import Result from '../../components/result';
 import { Text } from '../../components/text';
+import colors from '../../utils/colors';
 
-const tabs = ['Tab 1', 'Tab 2'];
+const tabs = ['Verloop', 'Blad'];
 
 class ScoresheetScreen extends PureComponent {
   state = {
@@ -57,8 +58,12 @@ class ScoresheetScreen extends PureComponent {
 
     const homeScore = get(scoresheet, 'clubs.home.score');
     const awayScore = get(scoresheet, 'clubs.away.score');
+    const homeLineup = get(scoresheet, 'clubs.home.lineup', {});
+    const awayLineup = get(scoresheet, 'clubs.away.lineup', {});
     const homeName = navigation.getParam('home');
     const awayName = navigation.getParam('away');
+
+    console.log({ scoresheet });
 
     return (
       <View>
@@ -92,7 +97,26 @@ class ScoresheetScreen extends PureComponent {
           )}
           {selectedIndex === 1 && (
             <View>
-              <Text>{tabs[1]}</Text>
+              <Tabs
+                tabs={[homeName, awayName]}
+                selectedIndex={0}
+                onPress={e => console.log(e)}
+                highlightColor="#B9C2CE"
+                style={{
+                  backgroundColor: colors.white,
+                  borderTopLeftRadius: 0,
+                  borderTopRightRadius: 0,
+                }}
+              />
+              <ScrollView>
+                {flatten(Object.values(homeLineup)).map(player => (
+                  <View key={player.id} style={{ flexDirection: 'row' }}>
+                    <Text>{player.pair}</Text>
+                    <Text>{player.id}</Text>
+                    <Text>{player.name}</Text>
+                  </View>
+                ))}
+              </ScrollView>
             </View>
           )}
         </View>
