@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Text, View, ActivityIndicator, ScrollView } from 'react-native';
+import { View, ActivityIndicator, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { isEmpty, get } from 'lodash';
 import { fetchScoresheet } from '../../actions/scoresheet';
@@ -10,6 +10,7 @@ import {
 } from '../../selectors';
 import Tabs from '../../components/tabs/Tabs';
 import Result from '../../components/result';
+import { Text } from '../../components/text';
 
 const tabs = ['Tab 1', 'Tab 2'];
 
@@ -67,9 +68,15 @@ class ScoresheetScreen extends PureComponent {
           style={{ alignSelf: 'center' }}
         />
 
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text>{homeName}</Text>
-          <Text>{awayName}</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginTop: 20,
+          }}
+        >
+          <Text style={{ fontSize: 14 }}>{homeName}</Text>
+          <Text style={{ fontSize: 14, marginLeft: 20 }}>{awayName}</Text>
         </View>
 
         <View style={{ marginTop: 30, marginHorizontal: 16 }}>
