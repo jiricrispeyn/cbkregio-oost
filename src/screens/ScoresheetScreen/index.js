@@ -108,7 +108,10 @@ class ScoresheetScreen extends PureComponent {
                   borderTopRightRadius: 0,
                 }}
               />
-              <ScrollView>
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={{ flex: 1 }}
+              >
                 {flatten(Object.values(homeLineup)).map(player => (
                   <View key={player.id} style={{ flexDirection: 'row' }}>
                     <Text>{player.pair}</Text>
