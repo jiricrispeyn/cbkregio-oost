@@ -119,6 +119,14 @@ class ScoresheetScreen extends PureComponent {
                     <Text>{player.name}</Text>
                   </View>
                 ))}
+
+                {flatten(Object.values(awayLineup)).map(player => (
+                  <View key={player.id} style={{ flexDirection: 'row' }}>
+                    <Text>{player.pair}</Text>
+                    <Text>{player.id}</Text>
+                    <Text>{player.name}</Text>
+                  </View>
+                ))}
               </ScrollView>
             </View>
           )}
