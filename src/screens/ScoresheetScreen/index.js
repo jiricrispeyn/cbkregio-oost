@@ -20,6 +20,12 @@ const ScoresheetScreen = ({
   loading,
   error,
 }) => {
+  if (isEmpty(scoresheet)) {
+    <View>
+      <ActivityIndicator />
+    </View>;
+  }
+
   return <View />;
 };
 
