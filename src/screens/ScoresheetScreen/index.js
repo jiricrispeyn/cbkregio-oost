@@ -7,7 +7,13 @@ import {
   getActiveScoresheetError,
 } from '../../selectors';
 
-const ScoresheetScreen = () => {
+const ScoresheetScreen = ({
+  navigation,
+  dispatch,
+  scoresheet,
+  loading,
+  error,
+}) => {
   return <View />;
 };
 
